@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Icons } from './components/Icons';
+import { Icons } from './components/Icons.jsx';
 import { Dashboard } from './components/Dashboard';
+import { AdminPanel } from './components/AdminPanel';
 
-// Import our new extracted components
 import { VocabMix } from './components/VocabMix';
 import { FinalQuiz } from './components/FinalQuiz';
 import { 
@@ -15,14 +15,13 @@ import {
 function App() {
     const [view, setView] = useState('dashboard');
 
-    // Scroll to top whenever view changes
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [view]);
 
-    // Simple view router
     const renderView = () => {
         switch(view) {
+            case 'admin': return <AdminPanel onBack={()=>setView('dashboard')} />;
             case 'alphabet': return <AlphabetLesson onComplete={()=>setView('dashboard')} />;
             case 'numbers': return <NumbersLesson onComplete={()=>setView('dashboard')} />;
             case 'calendar': return <CalendarLesson onComplete={()=>setView('dashboard')} />;
@@ -45,14 +44,17 @@ function App() {
 
     return (
         <div className="min-h-screen bg-gray-900 text-white font-sans antialiased">
-            <div className="sticky top-0 z-10 bg-gray-900/90 backdrop-blur-md border-b border-gray-800 p-4 flex items-center justify-between">
-                {view !== 'dashboard' ? 
-                    <button onClick={()=>setView('dashboard')} className="flex items-center gap-2 text-indigo-400 font-bold">
-                        <Icons.ArrowLeft size={20}/> Menú
-                    </button> 
-                    : <div className="text-xl font-black text-indigo-500 tracking-tighter">NOTAS<span className="text-pink-500">.APP</span></div>
-                }
-            </div>
+            {/* Header: z-50 ensures it stays ON TOP of everything else */}
+            {view !== 'admin' && (
+                <div className="sticky top-0 z-50 bg-gray-900/90 backdrop-blur-md border-b border-gray-800 p-4 flex items-center justify-between">
+                    {view !== 'dashboard' ? 
+                        <button onClick={()=>setView('dashboard')} className="flex items-center gap-2 text-indigo-400 font-bold">
+                            <Icons.ArrowLeft size={20}/> Menú
+                        </button> 
+                        : <div className="text-xl font-black text-indigo-500 tracking-tighter">NOTAS<span className="text-pink-500">.APP</span></div>
+                    }
+                </div>
+            )}
             {renderView()}
         </div>
     );

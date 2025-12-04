@@ -50,26 +50,11 @@ export const AdminSeeder = () => {
 
     return (
         <div className="p-4 bg-gray-800 border border-yellow-500 rounded-xl mb-6 space-y-2">
-            <h3 className="font-bold text-yellow-500">⚠️ Admin Database Tools</h3>
+            <h3 className="font-bold text-yellow-500">⚠️ Herramientas de administración de base de datos</h3>
             
             <div className="flex flex-wrap gap-2">
-                {/* NEW BUTTON FOR WEATHER */}
-                <button 
-                    onClick={() => uploadList("weather", WEATHER_DATA)} 
-                    disabled={loading}
-                    className="bg-orange-500 hover:bg-orange-400 text-white font-bold py-2 px-4 rounded"
-                >
-                    Upload Weather
-                </button>
-
-                {/* You can keep your other buttons here if you need them later */}
-                 <button 
-                    onClick={() => uploadList("conjugations", CONJUGATION_DATA)} 
-                    disabled={loading}
-                    className="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-4 rounded"
-                >
-                    Upload Conjugations
-                </button>
+                {/* ADD BUTTONS FOR ADMIN HERE */}
+                
             </div>
 
             {status && <p className="text-sm text-gray-300">{status}</p>}
