@@ -1,10 +1,23 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Icons } from './Icons';
 import { LessonQuiz } from './LessonQuiz';
+
+// IMPORT ALL THE DATA HERE
 import { 
-    ALPHABET_DATA, NUMBER_DATA, COLORS_DATA, 
-    // ... import ALL the arrays/helpers you need from data.js
-    getSmartDistractors, getDistractors 
+    ALPHABET_DATA,
+    NUMBER_DATA,
+    CALENDAR_DATA,
+    CHARACTERS,
+    JOBS_DATA,
+    PLACES_DATA,
+    COUNTRIES_DATA,
+    CONJUGATION_DATA,
+    FEELINGS_DATA,   // This was the missing one causing your error!
+    GREETINGS_DATA,
+    COLORS_DATA,
+    SPANISH_PHRASES,
+    getSmartDistractors, // Make sure helpers are imported too
+    getDistractors
 } from '../data';
 
 // --- COMPONENTS ---
