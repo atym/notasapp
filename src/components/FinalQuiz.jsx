@@ -1,47 +1,72 @@
 import { useState, useEffect } from 'react';
-import { LessonQuiz } from './LessonQuiz'; // It uses the quiz engine
-import { generateVocabBank, getDistractors } from '../data';
+import { db } from '../firebase';
+import { collection, getDocs } from 'firebase/firestore';
+import { LessonQuiz } from './LessonQuiz';
+// Import our new smart brain
+import { getSmartDistractors } from '../data';
 
 export const FinalQuiz = ({ onComplete }) => {
     const [pool, setPool] = useState([]);
+    const [loading, setLoading] = useState(true);
     
     useEffect(() => {
-        const generateFinalPool = () => {
-            let p = [
-                 { type: 'mc', q: "___ soy doctor.", a: "Yo", opts: ["Yo", "Tú", "Él"].sort(()=>0.5-Math.random()), exp: "Yo soy." },
-                 { type: 'mc', q: "Ella ___ hambre.", a: "tiene", opts: ["es", "está", "tiene"].sort(()=>0.5-Math.random()), exp: "Tener hambre." },
-                 { type: 'mc', q: "¿Dónde ___ tú?", a: "vives", opts: ["vivo", "vives", "vive"].sort(()=>0.5-Math.random()), exp: "Tú vives." },
-                 { type: 'mc', q: "Nosotros ___ en el parque.", a: "estamos", opts: ["somos", "estamos", "tenemos"].sort(()=>0.5-Math.random()), exp: "Ubicación = Estar." },
-                 { type: 'mc', q: "¿Cómo te ___?", a: "llamas", opts: ["llama", "llamas", "llamo"].sort(()=>0.5-Math.random()), exp: "Te llamas." },
-                 { type: 'mc', q: "El plural de 'Mexicano'", a: "Mexicanos", opts: ["Mexicanos", "Mexicano", "Mexicanoes"].sort(()=>0.5-Math.random()), exp: "Termina en vocal + s." },
-                 { type: 'mc', q: "¿Qué tiempo hace? (Windy)", a: "Hace viento", opts: ["Está viento", "Hace viento", "Es viento"].sort(()=>0.5-Math.random()), exp: "Clima = Hace." },
-            ];
-            
-            // Add real vocab questions for filler
-            const vocab = generateVocabBank().sort(() => 0.5 - Math.random());
-            
-            // We need 18 more to reach 25
-            let vIndex = 0;
-            while (p.length < 25 && vIndex < vocab.length) {
-                const item = vocab[vIndex];
-                // Use getDistractors (generic) for mixed vocab pool
-                const distractors = getDistractors(item.en, 2); 
-                p.push({
-                    type: 'mc',
-                    q: `¿Qué significa "${item.es}"?`,
-                    a: item.en,
-                    opts: [item.en, ...distractors].sort(() => 0.5 - Math.random()),
-                    exp: `${item.es} = ${item.en}`
+        const generateFinalPool = async () => {
+            try {
+                const cols = ['colors', 'places', 'greetings', 'feelings', 'days', 'months'];
+                let masterList = [];
+
+                // 1. Fetch Standard Collections & Tag Them
+                for (const col of cols) {
+                    const s = await getDocs(collection(db, col));
+                    // CRITICAL: We add 'category: col' so the brain knows what it is
+                    masterList.push(...s.docs.map(d => ({...d.data(), category: col})));
+                }
+                
+                // 2. Fetch Jobs (Tag as 'jobs')
+                const jobsSnap = await getDocs(collection(db, 'jobs'));
+                masterList.push(...jobsSnap.docs.map(d => ({ 
+                    es: d.data().masc, 
+                    en: d.data().eng, 
+                    category: 'jobs' 
+                })));
+
+                // 3. Generate Questions
+                let questions = [];
+                // Shuffle master list
+                masterList.sort(() => 0.5 - Math.random());
+
+                // Pick first 25
+                const targetItems = masterList.slice(0, 25);
+
+                questions = targetItems.map(item => {
+                    // USE THE NEW BRAIN
+                    // We pass the whole 'item' and the whole 'masterList'
+                    const distractors = getSmartDistractors(item, masterList);
+
+                    return {
+                        type: 'mc',
+                        q: `¿Qué significa "${item.es}"?`,
+                        a: item.en,
+                        opts: [item.en, ...distractors].sort(() => 0.5 - Math.random()),
+                        exp: `${item.es} = ${item.en}`
+                    };
                 });
-                vIndex++;
+
+                setPool(questions);
+
+            } catch (error) {
+                console.error("Error generating quiz:", error);
+            } finally {
+                setLoading(false);
             }
-            return p;
         };
 
-        setPool(generateFinalPool());
+        generateFinalPool();
     }, []);
 
-    if (pool.length === 0) return <div>Generando examen...</div>;
+    if (loading) return <div className="p-10 text-center text-gray-400">Generando examen final...</div>;
+
+    if (pool.length === 0) return <div className="p-10 text-center text-red-400">No hay suficientes datos para el examen.</div>;
 
     return (
         <div className="p-6 max-w-md mx-auto pb-24">
@@ -49,9 +74,7 @@ export const FinalQuiz = ({ onComplete }) => {
             <LessonQuiz 
                 pool={pool} 
                 questionCount={25} 
-                onComplete={() => {
-                    onComplete();
-                }} 
+                onComplete={onComplete} 
             />
         </div>
     );

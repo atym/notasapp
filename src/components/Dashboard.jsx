@@ -1,10 +1,31 @@
 import { useState, useEffect } from 'react';
 import { Icons } from './Icons';
-import { SPANISH_PHRASES } from '../data'; // Adjust path if needed
+import { AdminSeeder } from './AdminSeeder';
+// NEW: Database imports
+import { db } from '../firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
 export const Dashboard = ({ onSelectLesson }) => {
-    const [greeting, setGreeting] = useState("");
-    useEffect(() => setGreeting(SPANISH_PHRASES[Math.floor(Math.random() * SPANISH_PHRASES.length)]), []);
+    const [greeting, setGreeting] = useState("¡Hola! ¿Cómo estás?"); // Default
+
+    // NEW: Fetch random phrase from DB
+    useEffect(() => {
+        const fetchGreeting = async () => {
+            try {
+                const snap = await getDocs(collection(db, "phrases"));
+                if (!snap.empty) {
+                    // Extract just the text from each document
+                    const items = snap.docs.map(doc => doc.data().text);
+                    // Pick a random one
+                    const random = items[Math.floor(Math.random() * items.length)];
+                    setGreeting(random);
+                }
+            } catch (error) {
+                console.error("Error fetching greeting:", error);
+            }
+        };
+        fetchGreeting();
+    }, []);
 
     const lessons = [
         { id: 'alphabet', title: 'El Alfabeto', desc: 'Pronunciación y sonidos.', icon: <Icons.Type size={24} />, color: 'bg-purple-600' },
@@ -27,6 +48,7 @@ export const Dashboard = ({ onSelectLesson }) => {
 
     return (
         <div className="p-6 max-w-md mx-auto space-y-6 pb-32">
+            <AdminSeeder />
             <div className="space-y-1">
                 <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-400 to-indigo-400 bg-clip-text text-transparent">Hola, estudiante</h1>
                 <p className="text-gray-400">{greeting}</p>
