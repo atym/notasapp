@@ -1,7 +1,11 @@
  // --- DATA ---
 export const SPANISH_PHRASES = [
-    "¡Hola! ¿Cómo estás?", "¡Pura vida!", "¿Qué onda?", "¡Buenos días!", "¡Buenas tardes!",
-    "¿Todo bien?", "¡Qué padre!", "¡Chévere!", "¡Dale!", "¡Venga!", "¿Qué tal?", "¡Bienvenido!"
+    "¡Hola! ¿Cómo estás?", "¡Pura vida!", "¿Qué onda?", "¿Todo bien?", "¡Qué padre!", 
+    "¡Chévere!", "¡Dale!", "¡Venga!", "¿Qué tal?", "¡Bienvenido!", "¿Cómo te va?", 
+    "¿Qué pasa?", "¡Nos vemos!", "¡Hasta luego!", "¡Cuídate!", "¡Buen provecho!", 
+    "¡Salud!", "¡Felicitaciones!", "¡Lo siento!", "Por favor", "Gracias", "De nada",
+    "¡Qué bien!", "¡Genial!", "¿En serio?", "¡Claro que sí!", "¡Qué lástima!", "¡No pasa nada!", "¡Vale!", 
+    "Con permiso", "¡Buena suerte!", "No entiendo", "Más despacio, por favor", "¡Diviértete!"
 ];
 
 export const COLORS_DATA = [
