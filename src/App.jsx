@@ -6,13 +6,14 @@ import { AdminPanel } from './components/AdminPanel.jsx';
 import { VocabMix } from './components/VocabMix.jsx';
 import { FinalQuiz } from './components/FinalQuiz.jsx';
 
-// IMPORT THE NEW MANAGER
+// IMPORT THE NEW MANAGERS
 import BasicVocabManager from './components/lessons/basicvocab/index.jsx';
+import SituationalManager from './components/lessons/situational/index.jsx';
 
 import { 
     CalendarLesson, CharacterLesson, 
     VerbLesson, WeatherLesson, JobsLesson, NationalitiesLesson, 
-    IntroLesson, InterviewLesson, ColorsLesson, FeelingsLesson, 
+    IntroLesson, InterviewLesson, 
     PronounsLesson, ConjugationSection 
 } from './components/Lessons.jsx';
 
@@ -37,27 +38,33 @@ function App() {
             // --- BASIC VOCAB (MANAGED) ---
             case 'vocales': 
             case 'alphabet':
-            case 'numbers': // MOVED HERE
+            case 'numbers':
+            case 'colors': // MOVED HERE
                 return (
                     <LessonWrapper>
                         <BasicVocabManager lessonId={view} />
                     </LessonWrapper>
                 );
 
+            // --- SITUATIONAL (MANAGED) ---
+            case 'feelings':
+                return (
+                    <LessonWrapper>
+                        <SituationalManager lessonId={view} />
+                    </LessonWrapper>
+                );
+
             // --- LEGACY ROUTES ---
-            // 'numbers' removed from here
             case 'calendar': return <CalendarLesson onComplete={()=>setView('dashboard')} />;
             case 'characters': return <CharacterLesson onComplete={()=>setView('dashboard')} />;
             case 'verbs': return <VerbLesson onComplete={()=>setView('dashboard')} />;
             case 'weather': return <WeatherLesson onComplete={()=>setView('dashboard')} />;
             case 'vocabmix': return <VocabMix onComplete={()=>setView('dashboard')} />;
-            case 'jobs': return <JobsLesson onComplete={()=>setView('dashboard')} />;
+            case 'jobs': return <JobsLesson on_Complete={()=>setView('dashboard')} />;
             case 'nationalities': return <NationalitiesLesson onComplete={()=>setView('dashboard')} />;
             case 'finalquiz': return <FinalQuiz onComplete={()=>setView('dashboard')} />;
             case 'intro': return <IntroLesson onComplete={()=>setView('dashboard')} />;
             case 'interview': return <InterviewLesson onComplete={()=>setView('dashboard')} />;
-            case 'colors': return <ColorsLesson onComplete={()=>setView('dashboard')} />;
-            case 'feelings': return <FeelingsLesson onComplete={()=>setView('dashboard')} />;
             case 'pronouns': return <PronounsLesson onComplete={()=>setView('dashboard')} />;
             case 'conjugations': return <ConjugationSection onComplete={()=>setView('dashboard')} />;
             default: return <Dashboard onSelectLesson={setView} />;

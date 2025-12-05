@@ -1,18 +1,19 @@
 import React from 'react';
-import Vowels from './Vowels';
-import Alphabet from './Alphabet';
-import Numbers from './Numbers';
+import AlphabetLesson from './Alphabet';
+import Vowels from './Vowels'; // Corrected import
+import NumbersLesson from './Numbers';
+import ColorsLesson from './Colors';
 
 const BasicVocabManager = ({ lessonId }) => {
   switch (lessonId) {
+    case 'alphabet':
+      return <AlphabetLesson />;
     case 'vocales':
-      return <Vowels />;
-    
-    case 'alphabet': 
-      return <Alphabet />;
-    
-    case 'numbers': 
-      return <Numbers />;
+      return <Vowels />; // Corrected component
+    case 'numbers':
+        return <NumbersLesson />;
+    case 'colors':
+        return <ColorsLesson />;
 
     default:
       return (

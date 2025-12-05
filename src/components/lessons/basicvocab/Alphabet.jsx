@@ -36,7 +36,16 @@ const Alphabet = () => {
 
   const speak = (text) => {
     window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
+    let utterance;
+
+    if (text === 'LL') {
+      utterance = new SpeechSynthesisUtterance('ye');
+    } else if (text === 'RR') {
+      utterance = new SpeechSynthesisUtterance('erre');
+    } else {
+      utterance = new SpeechSynthesisUtterance(text.toLowerCase());
+    }
+    
     utterance.lang = 'es-MX';
     utterance.rate = 0.8;
     window.speechSynthesis.speak(utterance);
@@ -62,7 +71,7 @@ const Alphabet = () => {
     return (
         <button 
             key={item.letter} 
-            onClick={() => speak(item.letter)} // Reverted to speak the letter
+            onClick={() => speak(item.letter)}
             className={`group flex justify-between items-center p-4 rounded-xl border border-gray-700/50 hover:bg-white/5 hover:border-${colorClass}-500/50 transition-all active:scale-95 text-left`}
         >
             <div className="flex items-center gap-4">
@@ -150,9 +159,7 @@ const Alphabet = () => {
                 className={`flex items-center justify-center gap-3 w-full py-4 rounded-xl border ${videoError ? 'border-pink-500/30 bg-pink-500/10' : 'border-gray-700/50 hover:bg-white/5'} transition-all group`}
             >
                 {videoError ? <AlertCircle size={18} className="text-pink-500" /> : <Play size={18} className="text-gray-400 group-hover:text-white" />}
-                <span className={`text-sm font-medium ${videoError ? 'text-pink-200' : 'text-gray-400 group-hover:text-white'}`}>
-                    {videoError ? "Video no disponible - Ver en YouTube" : "Abrir en YouTube App"}
-                </span>
+                <span className={`text-sm font-medium ${videoError ? 'text-pink-200' : 'text-gray-400 group-hover:text-white'}`}>{videoError ? "Video no disponible - Ver en YouTube" : "Abrir en YouTube App"}</span>
                 <ExternalLink size={14} className={`${videoError ? 'text-pink-500' : 'text-gray-600 group-hover:text-white'}`} />
             </a>
         </div>
