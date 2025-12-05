@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-// Explicitly adding .jsx extensions to ensure resolution
 import { Icons } from './components/Icons.jsx'; 
 import { Dashboard } from './components/Dashboard.jsx';
 import { AdminPanel } from './components/AdminPanel.jsx';
@@ -8,11 +7,10 @@ import { VocabMix } from './components/VocabMix.jsx';
 import { FinalQuiz } from './components/FinalQuiz.jsx';
 
 // IMPORT THE NEW MANAGER
-// Pointing to the specific file to avoid folder index ambiguity
 import BasicVocabManager from './components/lessons/basicvocab/index.jsx';
 
 import { 
-    AlphabetLesson, NumbersLesson, CalendarLesson, CharacterLesson, 
+    CalendarLesson, CharacterLesson, 
     VerbLesson, WeatherLesson, JobsLesson, NationalitiesLesson, 
     IntroLesson, InterviewLesson, ColorsLesson, FeelingsLesson, 
     PronounsLesson, ConjugationSection 
@@ -27,7 +25,7 @@ function App() {
 
     // Wrapper for new lessons to ensure they have a Back button
     const LessonWrapper = ({ children }) => (
-        <div className="min-h-screen bg-[#111827] p-4 pt-5">
+        <div className="min-h-screen bg-[#111827] p-4 pt-20">
             {children}
         </div>
     );
@@ -36,17 +34,18 @@ function App() {
         switch(view) {
             case 'admin': return <AdminPanel onBack={()=>setView('dashboard')} />;
             
-            // --- NEW VOWELS ROUTE ---
-            case 'vocales': return (
-                <LessonWrapper>
-                    {/* We pass the ID so the manager knows which sub-lesson to render */}
-                    <BasicVocabManager lessonId="vocales" />
-                </LessonWrapper>
-            );
+            // --- BASIC VOCAB (MANAGED) ---
+            case 'vocales': 
+            case 'alphabet':
+            case 'numbers': // MOVED HERE
+                return (
+                    <LessonWrapper>
+                        <BasicVocabManager lessonId={view} />
+                    </LessonWrapper>
+                );
 
-            // --- EXISTING ROUTES ---
-            case 'alphabet': return <AlphabetLesson onComplete={()=>setView('dashboard')} />;
-            case 'numbers': return <NumbersLesson onComplete={()=>setView('dashboard')} />;
+            // --- LEGACY ROUTES ---
+            // 'numbers' removed from here
             case 'calendar': return <CalendarLesson onComplete={()=>setView('dashboard')} />;
             case 'characters': return <CharacterLesson onComplete={()=>setView('dashboard')} />;
             case 'verbs': return <VerbLesson onComplete={()=>setView('dashboard')} />;
@@ -67,7 +66,6 @@ function App() {
 
     return (
         <div className="min-h-screen bg-gray-900 text-white font-sans antialiased">
-            {/* Header: z-50 ensures it stays ON TOP of everything else */}
             {view !== 'admin' && (
                 <div className="sticky top-0 z-50 bg-gray-900/90 backdrop-blur-md border-b border-gray-800 p-4 flex items-center justify-between">
                     {view !== 'dashboard' ? 

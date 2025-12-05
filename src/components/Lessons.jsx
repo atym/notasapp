@@ -6,61 +6,6 @@ import { LessonQuiz } from './LessonQuiz';
 import { getSmartDistractors } from '../data';
 
 // --- COMPONENTS ---
-export const AlphabetLesson = ({ onComplete }) => {
-    // 1. New State
-    const [alphabet, setAlphabet] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    // 2. Fetch from DB
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const snap = await getDocs(collection(db, "alphabet"));
-                const items = snap.docs.map(doc => doc.data());
-                
-                // IMPORTANT: Sort alphabetically so A comes before B
-                items.sort((a, b) => a.l.localeCompare(b.l));
-                
-                setAlphabet(items);
-            } catch (error) {
-                console.error("Error fetching alphabet:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchData();
-    }, []);
-
-    if(loading) return <div className="p-10 text-center text-gray-400">Cargando alfabeto...</div>;
-
-    return (
-        <div className="p-6 max-w-md mx-auto pb-24 space-y-4">
-            <div className="bg-gray-800 p-4 rounded-xl mb-4">
-                <h3 className="font-bold text-lg mb-2">Claves de Pronunciación</h3>
-                <ul className="text-sm text-gray-300 list-disc list-inside">
-                    <li><b>H</b> es siempre silenciosa.</li>
-                    <li><b>LL</b> suena como 'Y'.</li>
-                    <li><b>Ñ</b> suena como 'ni' en 'onion'.</li>
-                </ul>
-            </div>
-            
-            <div className="grid grid-cols-1 gap-2">
-                {alphabet.map((item, idx) => (
-                    <div key={idx} className="bg-gray-800 p-3 rounded-lg border border-gray-700 flex justify-between items-center">
-                        <span className="text-xl font-black text-purple-400 w-12">{item.l}</span>
-                        <div className="text-right">
-                            <span className="block text-white font-medium">{item.s}</span>
-                            <span className="text-xs text-gray-500 italic">{item.tip}</span>
-                        </div>
-                    </div>
-                ))}
-            </div>
-            
-            <button onClick={onComplete} className="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-4 rounded-2xl shadow-lg mt-4">Volver</button>
-        </div>
-    );
-};
-
 export const NumbersLesson = ({ onComplete }) => {
     // 1. New State
     const [numbers, setNumbers] = useState([]);
