@@ -59,9 +59,9 @@ const ColorsLesson = () => {
     if(mode === 'quiz') return <div className="p-6 max-w-md mx-auto pb-24"><LessonQuiz pool={quizPool} questionCount={10} onComplete={() => setMode('learn')} /></div>;
 
     return (
-        <div className="p-6 max-w-md mx-auto pb-24">
+        <div className="p-6 max-w-4xl mx-auto pb-24">
             <h2 className="text-2xl font-bold mb-4 text-white">Colores</h2>
-            <div className="grid grid-cols-2 gap-3 mb-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-6">
                 {colors.map((c, i) => (
                     <ColorCard key={i} c={c} />
                 ))}

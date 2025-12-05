@@ -65,14 +65,14 @@ export const WeatherLesson = ({ onComplete }) => {
     if (mode === 'quiz') return <div className="p-6 max-w-md mx-auto pb-24"><LessonQuiz pool={quizPool} questionCount={10} onComplete={() => setMode('learn')} /></div>;
 
     return (
-        <div className="p-6 max-w-md mx-auto pb-24">
+        <div className="p-6 max-w-4xl mx-auto pb-24">
              <div className="mb-6 bg-gray-800 p-4 rounded-xl border-l-4 border-indigo-500">
                 <h3 className="font-bold text-white mb-2">Gramática:</h3>
                 <p className="text-gray-400 text-sm"><b>Está</b>: Condición visual (nublado, soleado).</p>
                 <p className="text-gray-400 text-sm"><b>Hace</b>: Sensación/Temperatura (calor, frío, viento).</p>
                 <p className="text-gray-400 text-sm"><b>Hay</b>: Existencia (niebla, tormenta).</p>
             </div>
-            <div className="grid grid-cols-2 gap-3 mb-6">{weather.map((it, idx) => <WeatherCard key={idx} item={it} />)}</div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-6">{weather.map((it, idx) => <WeatherCard key={idx} item={it} />)}</div>
             <button onClick={() => setMode('quiz')} className="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-4 rounded-2xl shadow-lg mb-4">Tomar Prueba</button>
             <button onClick={onComplete} className="w-full border border-gray-600 text-gray-400 font-bold py-3 rounded-2xl">Volver</button>
         </div>
