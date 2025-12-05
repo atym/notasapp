@@ -12,8 +12,7 @@ import SituationalManager from './components/lessons/situational/index.jsx';
 
 import { 
     CalendarLesson, CharacterLesson, 
-    VerbLesson, WeatherLesson, JobsLesson, NationalitiesLesson, 
-    IntroLesson, InterviewLesson, 
+    VerbLesson, JobsLesson, NationalitiesLesson, 
     PronounsLesson, ConjugationSection 
 } from './components/Lessons.jsx';
 
@@ -40,6 +39,7 @@ function App() {
             case 'alphabet':
             case 'numbers':
             case 'colors': // MOVED HERE
+            case 'weather':
                 return (
                     <LessonWrapper>
                         <BasicVocabManager lessonId={view} />
@@ -48,6 +48,8 @@ function App() {
 
             // --- SITUATIONAL (MANAGED) ---
             case 'feelings':
+            case 'intro':
+            case 'interview':
                 return (
                     <LessonWrapper>
                         <SituationalManager lessonId={view} />
@@ -58,13 +60,10 @@ function App() {
             case 'calendar': return <CalendarLesson onComplete={()=>setView('dashboard')} />;
             case 'characters': return <CharacterLesson onComplete={()=>setView('dashboard')} />;
             case 'verbs': return <VerbLesson onComplete={()=>setView('dashboard')} />;
-            case 'weather': return <WeatherLesson onComplete={()=>setView('dashboard')} />;
             case 'vocabmix': return <VocabMix onComplete={()=>setView('dashboard')} />;
             case 'jobs': return <JobsLesson on_Complete={()=>setView('dashboard')} />;
             case 'nationalities': return <NationalitiesLesson onComplete={()=>setView('dashboard')} />;
             case 'finalquiz': return <FinalQuiz onComplete={()=>setView('dashboard')} />;
-            case 'intro': return <IntroLesson onComplete={()=>setView('dashboard')} />;
-            case 'interview': return <InterviewLesson onComplete={()=>setView('dashboard')} />;
             case 'pronouns': return <PronounsLesson onComplete={()=>setView('dashboard')} />;
             case 'conjugations': return <ConjugationSection onComplete={()=>setView('dashboard')} />;
             default: return <Dashboard onSelectLesson={setView} />;

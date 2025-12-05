@@ -1,10 +1,16 @@
 import React from 'react';
 import FeelingsLesson from './Feelings';
+import { IntroLesson } from './Intro';
+import { InterviewLesson } from './Interview';
 
 const SituationalManager = ({ lessonId }) => {
   switch (lessonId) {
     case 'feelings':
       return <FeelingsLesson />;
+    case 'intro':
+      return <IntroLesson />;
+    case 'interview':
+      return <InterviewLesson />;
 
     default:
       return (
