@@ -21,15 +21,12 @@ export const Dashboard = ({ onSelectLesson }) => {
         fetchGreeting();
     }, []);
 
-    // --- CATEGORIES CONFIGURATION ---
     const categories = [
         {
             title: "Vocabulario Básico",
             color: "text-purple-400",
-            border: "border-purple-500/20",
             lessons: [
                 { id: 'alphabet', title: 'Alfabeto', icon: <Icons.Type />, color: 'bg-purple-600' },
-                // NEW LESSON ADDED HERE
                 { id: 'vocales', title: 'Las Vocales', icon: <Icons.Type />, color: 'bg-pink-500' }, 
                 { id: 'numbers', title: 'Números', icon: <Icons.Hash />, color: 'bg-blue-500' },
                 { id: 'colors', title: 'Colores', icon: <Icons.Palette />, color: 'bg-red-500' },
@@ -40,7 +37,6 @@ export const Dashboard = ({ onSelectLesson }) => {
         {
             title: "Gramática",
             color: "text-indigo-400",
-            border: "border-indigo-500/20",
             lessons: [
                 { id: 'pronouns', title: 'Pronombres', icon: <Icons.Users />, color: 'bg-indigo-500' },
                 { id: 'verbs', title: 'Ser/Estar', icon: <Icons.BrainCircuit />, color: 'bg-emerald-600' },
@@ -50,7 +46,6 @@ export const Dashboard = ({ onSelectLesson }) => {
         {
             title: "Situacional",
             color: "text-pink-400",
-            border: "border-pink-500/20",
             lessons: [
                 { id: 'intro', title: 'Presentarse', icon: <Icons.HeartHandshake />, color: 'bg-pink-500' },
                 { id: 'interview', title: 'Entrevista', icon: <Icons.Mic />, color: 'bg-cyan-600' },
@@ -63,7 +58,6 @@ export const Dashboard = ({ onSelectLesson }) => {
         {
             title: "Pruebas",
             color: "text-yellow-400",
-            border: "border-yellow-500/20",
             lessons: [
                 { id: 'vocabmix', title: 'Vocab Mix', icon: <Icons.BookA />, color: 'bg-pink-600' },
                 { id: 'finalquiz', title: 'Examen Final', icon: <Icons.Award />, color: 'bg-yellow-600' },
@@ -72,7 +66,7 @@ export const Dashboard = ({ onSelectLesson }) => {
     ];
 
     return (
-        <div className="p-6 max-w-md mx-auto space-y-8 pb-32 relative">
+        <div className="p-6 max-w-7xl mx-auto space-y-8 pb-32 relative">
             
             {/* Header */}
             <div className="space-y-1 relative z-20"> 
@@ -91,7 +85,7 @@ export const Dashboard = ({ onSelectLesson }) => {
                         <h3 className={`text-xs font-bold uppercase tracking-widest ${cat.color} ml-1`}>
                             {cat.title}
                         </h3>
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
                             {cat.lessons.map(l => (
                                 <button 
                                     key={l.id} 
