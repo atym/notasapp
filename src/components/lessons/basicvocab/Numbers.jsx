@@ -42,7 +42,7 @@ const NumbersLesson = () => {
   }
 
   return (
-    <div className="w-full text-gray-100 p-6 space-y-8 animate-fade-in">
+    <div className="w-full text-gray-100 space-y-8 animate-fade-in">
       <div className="space-y-1">
         <h2 className="text-2xl font-black text-white tracking-tight">Los números</h2>
         <p className="text-gray-400 text-xs font-medium">Del 0 al 19</p>

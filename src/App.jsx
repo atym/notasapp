@@ -25,7 +25,7 @@ function App() {
 
     // Wrapper for new lessons to ensure they have a Back button
     const LessonWrapper = ({ children }) => (
-        <div className="min-h-screen bg-[#111827] p-4 pt-20">
+        <div className="min-h-screen bg-[#111827] p-6">
             {children}
         </div>
     );
@@ -67,7 +67,7 @@ function App() {
     return (
         <div className="min-h-screen bg-gray-900 text-white font-sans antialiased">
             {view !== 'admin' && (
-                <div className="sticky top-0 z-50 bg-gray-900/90 backdrop-blur-md border-b border-gray-800 p-4 flex items-center justify-between">
+                 <div className="sticky top-0 z-50 bg-gray-900/90 backdrop-blur-md border-b border-gray-800 p-4 flex items-center justify-between">
                     {view !== 'dashboard' ? 
                         <button onClick={()=>setView('dashboard')} className="flex items-center gap-2 text-indigo-400 font-bold">
                             <Icons.ArrowLeft size={20}/> Menú
@@ -76,7 +76,9 @@ function App() {
                     }
                 </div>
             )}
-            {renderView()}
+            <div className="p-6">
+              {renderView()}
+            </div>
         </div>
     );
 }

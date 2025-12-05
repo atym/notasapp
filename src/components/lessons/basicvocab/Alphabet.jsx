@@ -26,7 +26,12 @@ const Alphabet = () => {
 
   const speak = (text) => {
     window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
+    const pronunciationFixes = {
+      'b': 'be',
+      'v': 'uve'
+    };
+    const textToSpeak = pronunciationFixes[text] || text;
+    const utterance = new SpeechSynthesisUtterance(textToSpeak);
     utterance.lang = 'es-MX';
     utterance.rate = 0.8;
     window.speechSynthesis.speak(utterance);
@@ -44,7 +49,7 @@ const Alphabet = () => {
   }
 
   return (
-    <div className="min-h-screen w-full bg-[#111827] text-gray-100 p-6 space-y-8 animate-fade-in">
+    <div className="w-full bg-[#111827] text-gray-100 space-y-8 animate-fade-in">
         
         {/* Header */}
         <div className="space-y-1">

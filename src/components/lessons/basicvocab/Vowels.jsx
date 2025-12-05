@@ -54,7 +54,7 @@ const Vowels = () => {
   }
 
   return (
-    <div className="min-h-screen w-full bg-[#111827] text-gray-100 p-6 space-y-8 animate-fade-in">
+    <div className="w-full bg-[#111827] text-gray-100 space-y-8 animate-fade-in">
       
       {/* Header */}
       <div className="space-y-1">
