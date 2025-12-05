@@ -1,16 +1,22 @@
 import { useState, useEffect } from 'react';
-import { Icons } from './components/Icons.jsx';
-import { Dashboard } from './components/Dashboard';
-import { AdminPanel } from './components/AdminPanel';
+// Explicitly adding .jsx extensions to ensure resolution
+import { Icons } from './components/Icons.jsx'; 
+import { Dashboard } from './components/Dashboard.jsx';
+import { AdminPanel } from './components/AdminPanel.jsx';
 
-import { VocabMix } from './components/VocabMix';
-import { FinalQuiz } from './components/FinalQuiz';
+import { VocabMix } from './components/VocabMix.jsx';
+import { FinalQuiz } from './components/FinalQuiz.jsx';
+
+// IMPORT THE NEW MANAGER
+// Pointing to the specific file to avoid folder index ambiguity
+import BasicVocabManager from './components/lessons/basicvocab/index.jsx';
+
 import { 
     AlphabetLesson, NumbersLesson, CalendarLesson, CharacterLesson, 
     VerbLesson, WeatherLesson, JobsLesson, NationalitiesLesson, 
     IntroLesson, InterviewLesson, ColorsLesson, FeelingsLesson, 
     PronounsLesson, ConjugationSection 
-} from './components/Lessons';
+} from './components/Lessons.jsx';
 
 function App() {
     const [view, setView] = useState('dashboard');
@@ -19,9 +25,26 @@ function App() {
         window.scrollTo(0, 0);
     }, [view]);
 
+    // Wrapper for new lessons to ensure they have a Back button
+    const LessonWrapper = ({ children }) => (
+        <div className="min-h-screen bg-[#111827] p-4 pt-5">
+            {children}
+        </div>
+    );
+
     const renderView = () => {
         switch(view) {
             case 'admin': return <AdminPanel onBack={()=>setView('dashboard')} />;
+            
+            // --- NEW VOWELS ROUTE ---
+            case 'vocales': return (
+                <LessonWrapper>
+                    {/* We pass the ID so the manager knows which sub-lesson to render */}
+                    <BasicVocabManager lessonId="vocales" />
+                </LessonWrapper>
+            );
+
+            // --- EXISTING ROUTES ---
             case 'alphabet': return <AlphabetLesson onComplete={()=>setView('dashboard')} />;
             case 'numbers': return <NumbersLesson onComplete={()=>setView('dashboard')} />;
             case 'calendar': return <CalendarLesson onComplete={()=>setView('dashboard')} />;

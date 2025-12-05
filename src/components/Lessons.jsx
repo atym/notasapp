@@ -449,7 +449,7 @@ export const CalendarLesson = ({ onComplete }) => {
 
             <div className="flex gap-2">
                 <button onClick={handleShuffle} className="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 rounded-lg text-sm border border-gray-600">
-                    🔀 Mezclar (Shuffle)
+                    🔀 Mezclar
                 </button>
                 <button onClick={() => setMode('quiz')} className="flex-1 bg-green-600 hover:bg-green-500 text-white font-bold py-2 rounded-lg text-sm shadow-lg">
                     Prueba

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Icons } from './Icons'; // Removed .jsx to let build system resolve it
+import { Icons } from './Icons';
 import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 
@@ -29,6 +29,8 @@ export const Dashboard = ({ onSelectLesson }) => {
             border: "border-purple-500/20",
             lessons: [
                 { id: 'alphabet', title: 'Alfabeto', icon: <Icons.Type />, color: 'bg-purple-600' },
+                // NEW LESSON ADDED HERE
+                { id: 'vocales', title: 'Las Vocales', icon: <Icons.Type />, color: 'bg-pink-500' }, 
                 { id: 'numbers', title: 'Números', icon: <Icons.Hash />, color: 'bg-blue-500' },
                 { id: 'colors', title: 'Colores', icon: <Icons.Palette />, color: 'bg-red-500' },
                 { id: 'calendar', title: 'Calendario', icon: <Icons.Clock />, color: 'bg-green-600' },

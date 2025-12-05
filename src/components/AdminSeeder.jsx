@@ -1,11 +1,20 @@
 import { useState } from 'react';
-import { db } from '../firebase';
+// FIX: Go up 1 level to reach src/firebase.js
+import { db } from '../firebase.js';
 import { collection, addDoc } from 'firebase/firestore';
-// We still import the other lists if you haven't uploaded them yet, 
-// but Weather is defined right here now.
-import {  } from '../data'; 
 
-// RAW WEATHER DATA (Since we removed it from the app)
+// --- DATA SETS ---
+
+// 1. VOWELS DATA
+const VOWELS_DATA = [
+    { order: 1, letter: "A", rhyme: "Con la “A”, mamá va a trabajar." },
+    { order: 2, letter: "E", rhyme: "Con la “E”, el bebé bebe leche." },
+    { order: 3, letter: "I", rhyme: "Con la “I”, Imprimir, bici." },
+    { order: 4, letter: "O", rhyme: "Con la “O”, oso, mono." },
+    { order: 5, letter: "U", rhyme: "Con la “U”, tú, ñu." }
+];
+
+// 2. WEATHER DATA
 const WEATHER_DATA = [
     { name: 'Está soleado', desc: 'It is sunny', icon: 'Sun' }, 
     { name: 'Está nublado', desc: 'It is cloudy', icon: 'Cloud' },
@@ -37,7 +46,6 @@ export const AdminSeeder = () => {
         try {
             const collectionRef = collection(db, collectionName);
             for (const item of dataList) {
-                // If it's the Alphabet, ensure we send it as an object
                 await addDoc(collectionRef, item);
             }
             setStatus(`Success! Uploaded ${dataList.length} items to '${collectionName}'.`);
@@ -53,11 +61,24 @@ export const AdminSeeder = () => {
             <h3 className="font-bold text-yellow-500">⚠️ Herramientas de administración de base de datos</h3>
             
             <div className="flex flex-wrap gap-2">
-                {/* ADD BUTTONS FOR ADMIN HERE */}
-                
+                <button 
+                    onClick={() => uploadList('lesson_vocales', VOWELS_DATA)}
+                    disabled={loading}
+                    className="px-4 py-2 bg-pink-600 hover:bg-pink-500 text-white rounded-lg text-xs font-bold transition-colors disabled:opacity-50"
+                >
+                    Subir Vocales (lesson_vocales)
+                </button>
+
+                <button 
+                    onClick={() => uploadList('weather', WEATHER_DATA)}
+                    disabled={loading}
+                    className="px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white rounded-lg text-xs font-bold transition-colors disabled:opacity-50"
+                >
+                    Subir Clima (weather)
+                </button>
             </div>
 
-            {status && <p className="text-sm text-gray-300">{status}</p>}
+            {status && <p className="text-sm text-gray-300 animate-pulse">{status}</p>}
         </div>
     );
 };
