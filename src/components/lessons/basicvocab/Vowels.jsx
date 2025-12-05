@@ -75,7 +75,7 @@ const Vowels = () => {
                 {vowels.map((item) => (
                 <button
                     key={item.letter}
-                    onClick={() => speak(item.letter)}
+                    onClick={() => speak(item.letter.toLowerCase())}
                     className="group flex flex-col items-center justify-center py-4 rounded-xl border border-gray-700/50 hover:border-pink-500/50 hover:bg-white/5 transition-all active:scale-95"
                 >
                     <span className="text-xl font-black text-white mb-1 group-hover:text-pink-400 transition-colors">
@@ -114,7 +114,7 @@ const Vowels = () => {
                     <span className={`text-sm font-medium ${videoError ? 'text-pink-200' : 'text-gray-400 group-hover:text-white'}`}>
                         {videoError ? "Video no disponible - Ver en YouTube" : "Abrir en YouTube App"}
                     </span>
-                    <ExternalLink size={14} className={`${videoError ? 'text-pink-500' : 'text-gray-600 group-hover:text-white'} ml-auto mr-2`} />
+                    <ExternalLink size={14} className={`${videoError ? 'text-pink-500' : 'text-gray-600 group-hover:text-white'} mr-2`} />
                 </a>
             </div>
 
