@@ -66,7 +66,7 @@ export const Dashboard = ({ onSelectLesson }) => {
     ];
 
     return (
-        <div className="p-6 max-w-7xl mx-auto space-y-8 pb-32 relative">
+        <div className="px-2 sm:p-6 max-w-7xl mx-auto space-y-8 pb-32 relative">
             
             {/* Header */}
             <div className="space-y-1 relative z-20"> 
