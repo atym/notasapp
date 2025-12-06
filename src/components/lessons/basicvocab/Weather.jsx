@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { db } from '../../../firebase';
 import { collection, getDocs } from 'firebase/firestore';
-import { LessonQuiz } from '../../LessonQuiz';
+import { LessonQuiz } from '../quizzes/LessonQuiz';
 import { getSmartDistractors } from '../../../data';
 import {
     FiSun, FiCloud, FiCloudRain, FiWind, FiThermometer, FiZap, FiHelpCircle 
@@ -89,4 +89,4 @@ const WeatherLesson = () => {
     );
 };
 
-export { WeatherLesson };
+export default WeatherLesson;

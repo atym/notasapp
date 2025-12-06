@@ -2,7 +2,7 @@ import { db } from '../../../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { useState, useEffect, useMemo } from 'react';
 import { FiChevronRight } from 'react-icons/fi';
-import { LessonQuiz } from '../../LessonQuiz';
+import { LessonQuiz } from '../quizzes/LessonQuiz';
 import { getSmartDistractors } from '../../../data';
 
 const JobsLesson = () => {

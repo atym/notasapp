@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../firebase';
-import { LessonQuiz } from '../../LessonQuiz';
+import { LessonQuiz } from '../quizzes/LessonQuiz';
 import { getSmartDistractors } from '../../../data';
 
 const ColorsLesson = () => {

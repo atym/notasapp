@@ -4,7 +4,7 @@ import { Dashboard } from './components/Dashboard.jsx';
 import { AdminPanel } from './components/AdminPanel.jsx';
 
 import { VocabMix } from './components/VocabMix.jsx';
-import { FinalQuiz } from './components/FinalQuiz.jsx';
+import { FinalQuiz } from './components/lessons/quizzes/FinalQuiz.jsx';
 
 // IMPORT THE NEW MANAGERS
 import BasicVocabManager from './components/lessons/basicvocab/index.jsx';

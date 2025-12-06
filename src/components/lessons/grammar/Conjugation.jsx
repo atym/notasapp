@@ -2,7 +2,7 @@ import { db } from '../../../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { useState, useEffect, useMemo } from 'react';
 import { FiArrowLeft, FiChevronRight } from 'react-icons/fi';
-import { LessonQuiz } from '../../LessonQuiz';
+import { LessonQuiz } from '../quizzes/LessonQuiz';
 
 const ConjugationLesson = () => {
     const [mode, setMode] = useState('list');

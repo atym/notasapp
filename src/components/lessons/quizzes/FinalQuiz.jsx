@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { db } from '../firebase';
+import { db } from '../../../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { LessonQuiz } from './LessonQuiz';
 // Import our new smart brain
-import { getSmartDistractors } from '../data';
+import { getSmartDistractors } from '../../../data';
 
 export const FinalQuiz = ({ onComplete }) => {
     const [pool, setPool] = useState([]);
@@ -45,7 +45,7 @@ export const FinalQuiz = ({ onComplete }) => {
 
                     return {
                         type: 'mc',
-                        q: `¿Qué significa "${item.es}"?`,
+                        q: `¿Qué significa \"${item.es}\"?`,
                         a: item.en,
                         opts: [item.en, ...distractors].sort(() => 0.5 - Math.random()),
                         exp: `${item.es} = ${item.en}`

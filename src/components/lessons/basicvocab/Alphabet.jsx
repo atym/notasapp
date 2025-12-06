@@ -38,7 +38,11 @@ const Alphabet = () => {
     window.speechSynthesis.cancel();
     let utterance;
 
-    if (text === 'LL') {
+    if (text === 'B') {
+      utterance = new SpeechSynthesisUtterance('be');
+    } else if (text === 'V') {
+      utterance = new SpeechSynthesisUtterance('ve');
+    } else if (text === 'LL') {
       utterance = new SpeechSynthesisUtterance('ye');
     } else if (text === 'RR') {
       utterance = new SpeechSynthesisUtterance('erre');

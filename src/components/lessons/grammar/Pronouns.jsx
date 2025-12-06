@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { LessonQuiz } from '../../LessonQuiz';
+import { LessonQuiz } from '../quizzes/LessonQuiz';
 
 const PronounsLesson = () => {
     const [mode, setMode] = useState('learn');
