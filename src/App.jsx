@@ -1,59 +1,128 @@
 import { useState, useEffect } from 'react';
-import { Icons } from './components/Icons';
-import { Dashboard } from './components/Dashboard';
+import { FiArrowLeft } from 'react-icons/fi';
+import { Dashboard } from './components/views/Dashboard.jsx';
+import { AdminPanel } from './components/views/AdminPanel.jsx';
+import { Login } from './components/views/Login.jsx';
+import LaunchScreen from './components/views/LaunchScreen.jsx';
+import { auth } from './firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 
-// Import our new extracted components
-import { VocabMix } from './components/VocabMix';
-import { FinalQuiz } from './components/FinalQuiz';
-import { 
-    AlphabetLesson, NumbersLesson, CalendarLesson, CharacterLesson, 
-    VerbLesson, WeatherLesson, JobsLesson, NationalitiesLesson, 
-    IntroLesson, InterviewLesson, ColorsLesson, FeelingsLesson, 
-    PronounsLesson, ConjugationSection 
-} from './components/Lessons';
+import { VocabMix } from './components/views/VocabMix.jsx';
+import { FinalQuiz } from './components/lessons/quizzes/FinalQuiz.jsx';
+
+import BasicVocabManager from './components/lessons/basicvocab/index.jsx';
+import SituationalManager from './components/lessons/situational/index.jsx';
+import GrammarManager from './components/lessons/grammar/index.jsx';
+
+// The bypass should only be active in DEV mode AND when the env flag is true.
+const devModeBypass = import.meta.env.DEV && import.meta.env.VITE_DEV_MODE_BYPASS_LOGIN === 'true';
+const devUserEmail = import.meta.env.VITE_DEV_USER_EMAIL || 'dev@local.host';
 
 function App() {
     const [view, setView] = useState('dashboard');
+    const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-    // Scroll to top whenever view changes
+    useEffect(() => {
+        // If bypass is active, set a fake user and finish loading
+        if (devModeBypass) {
+            setUser({ email: devUserEmail, uid: 'dev-user' });
+            setIsLoading(false);
+            return;
+        }
+
+        // Otherwise, listen for real authentication state changes
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+            // Once auth state is determined, set loading to false
+            setIsLoading(false);
+        });
+
+        return () => unsubscribe();
+    }, []);
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [view]);
 
-    // Simple view router
+    const LessonWrapper = ({ children }) => (
+        <div className="min-h-screen bg-[#111827] p-6">
+            {children}
+        </div>
+    );
+
     const renderView = () => {
+        // Consolidate props to pass down to all children
+        const viewProps = { user, onSelectLesson: setView, onComplete: () => setView('dashboard') };
+
         switch(view) {
-            case 'alphabet': return <AlphabetLesson onComplete={()=>setView('dashboard')} />;
-            case 'numbers': return <NumbersLesson onComplete={()=>setView('dashboard')} />;
-            case 'calendar': return <CalendarLesson onComplete={()=>setView('dashboard')} />;
-            case 'characters': return <CharacterLesson onComplete={()=>setView('dashboard')} />;
-            case 'verbs': return <VerbLesson onComplete={()=>setView('dashboard')} />;
-            case 'weather': return <WeatherLesson onComplete={()=>setView('dashboard')} />;
-            case 'vocabmix': return <VocabMix onComplete={()=>setView('dashboard')} />;
-            case 'jobs': return <JobsLesson onComplete={()=>setView('dashboard')} />;
-            case 'nationalities': return <NationalitiesLesson onComplete={()=>setView('dashboard')} />;
-            case 'finalquiz': return <FinalQuiz onComplete={()=>setView('dashboard')} />;
-            case 'intro': return <IntroLesson onComplete={()=>setView('dashboard')} />;
-            case 'interview': return <InterviewLesson onComplete={()=>setView('dashboard')} />;
-            case 'colors': return <ColorsLesson onComplete={()=>setView('dashboard')} />;
-            case 'feelings': return <FeelingsLesson onComplete={()=>setView('dashboard')} />;
-            case 'pronouns': return <PronounsLesson onComplete={()=>setView('dashboard')} />;
-            case 'conjugations': return <ConjugationSection onComplete={()=>setView('dashboard')} />;
-            default: return <Dashboard onSelectLesson={setView} />;
+            case 'admin': return <AdminPanel {...viewProps} onBack={()=>setView('dashboard')} />;
+            
+            case 'vocales': 
+            case 'alphabet':
+            case 'numbers':
+            case 'colors':
+            case 'weather':
+            case 'calendar':
+                return (
+                    <LessonWrapper>
+                        <BasicVocabManager lessonId={view} user={user} />
+                    </LessonWrapper>
+                );
+
+            case 'feelings':
+            case 'intro':
+            case 'interview':
+            case 'characters':
+            case 'jobs':
+            case 'nationalities':
+                return (
+                    <LessonWrapper>
+                        <SituationalManager lessonId={view} user={user} />
+                    </LessonWrapper>
+                );
+            
+            case 'pronouns':
+            case 'conjugations':
+            case 'verbs':
+                return (
+                    <LessonWrapper>
+                        <GrammarManager lessonId={view} user={user} />
+                    </LessonWrapper>
+                );
+
+            case 'vocabmix': return <VocabMix {...viewProps} />;
+            case 'finalquiz': return <FinalQuiz {...viewProps} />;
+            default: return <Dashboard {...viewProps} />;
         }
     };
 
+    // Show the launch screen while checking for authentication
+    if (isLoading) {
+        return <LaunchScreen />;
+    }
+
+    // If loading is finished and there is no user, show the Login page.
+    if (!user) {
+        return <Login />;
+    }
+
+    // If loading is finished and there is a user, show the main app.
     return (
         <div className="min-h-screen bg-gray-900 text-white font-sans antialiased">
-            <div className="sticky top-0 z-10 bg-gray-900/90 backdrop-blur-md border-b border-gray-800 p-4 flex items-center justify-between">
-                {view !== 'dashboard' ? 
-                    <button onClick={()=>setView('dashboard')} className="flex items-center gap-2 text-indigo-400 font-bold">
-                        <Icons.ArrowLeft size={20}/> Menú
-                    </button> 
-                    : <div className="text-xl font-black text-indigo-500 tracking-tighter">NOTAS<span className="text-pink-500">.APP</span></div>
-                }
+            {view !== 'admin' && (
+                 <div className="sticky top-0 z-50 bg-gray-900/90 backdrop-blur-md border-b border-gray-800 p-4 flex items-center justify-between">
+                    {view !== 'dashboard' ? 
+                        <button onClick={()=>setView('dashboard')} className="flex items-center gap-2 text-indigo-400 font-bold">
+                            <FiArrowLeft size={20}/> Menú
+                        </button> 
+                        : <div className="text-xl font-black text-indigo-500 tracking-tighter">NOTAS<span className="text-pink-500">.APP</span></div>
+                    }
+                </div>
+            )}
+            <div className="p-6">
+              {renderView()}
             </div>
-            {renderView()}
         </div>
     );
 }

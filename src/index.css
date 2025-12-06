@@ -1,4 +1,7 @@
-        body { -webkit-tap-highlight-color: transparent; background-color: #111827; }
+@import "tailwindcss";
+
+/* You can keep your custom styles below this line if you want */
+    body { -webkit-tap-highlight-color: transparent; background-color: #111827; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         .perspective-1000 { perspective: 1000px; }

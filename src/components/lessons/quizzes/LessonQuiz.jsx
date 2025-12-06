@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-// We don't need Icons or Data here, because the 'pool' of questions is passed in as a prop!
 
-export const LessonQuiz = ({ onComplete, questionCount, pool }) => {
+export const LessonQuiz = ({ onComplete, questionCount, pool, enableSpeech }) => {
     const [questions, setQuestions] = useState([]);
     const [currentQ, setCurrentQ] = useState(0);
     const [score, setScore] = useState(0);
@@ -15,21 +14,32 @@ export const LessonQuiz = ({ onComplete, questionCount, pool }) => {
         setQuestions(p);
     }, [pool, questionCount]);
 
+    const speak = (text) => {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'es-MX';
+        utterance.rate = 0.8; 
+        window.speechSynthesis.speak(utterance);
+    };
+
     const handleMC = (opt) => { 
         if (selected) return; 
         setSelected(opt); 
         const q = questions[currentQ]; 
         const correct = opt === q.a;
-        if (correct) setScore(s => s+1); 
+        if (correct) {
+            setScore(s => s+1);
+            if (enableSpeech) {
+                speak(q.a);
+            }
+        } 
         
-        // Detailed Feedback
         const msg = correct 
             ? "¡Correcto! " + (q.exp || "")
             : "Incorrecto. " + (q.exp || `La respuesta correcta es: ${q.a}`);
         
         setFeedback({correct, text: msg});
         
-        // Longer timeout to read explanation
         setTimeout(() => nextQ(), 3500); 
     };
 
@@ -54,7 +64,10 @@ export const LessonQuiz = ({ onComplete, questionCount, pool }) => {
     return (
         <div className="space-y-4">
             <div className="flex justify-between text-xs text-gray-400 font-mono"><span>P: {currentQ + 1}/{questions.length}</span><span>Pts: {score}</span></div>
-            <div className="bg-gray-800 p-4 rounded-xl border border-gray-700 min-h-[100px] flex items-center justify-center text-center"><p className="text-lg font-medium">{q.q}</p></div>
+            <div className="bg-gray-800 p-4 rounded-xl border border-gray-700 min-h-[100px] flex items-center justify-center text-center">
+              {q.color && <div className={`w-12 h-12 rounded-lg mr-4 ${q.color}`}></div>}
+              <p className="text-lg font-medium">{q.q}</p>
+            </div>
             {q.type === 'mc' && (
                 <div className="grid gap-2">{q.opts.map(opt => { 
                     let bg = "bg-gray-800 hover:bg-gray-700"; 
