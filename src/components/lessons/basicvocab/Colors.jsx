@@ -66,7 +66,7 @@ const ColorsLesson = () => {
                     <ColorCard key={i} c={c} />
                 ))}
             </div>
-            <button onClick={() => setMode('quiz')} className="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-4 rounded-2xl shadow-lg mb-4">Prueba de Colores</button>
+            <button onClick={() => setMode('quiz')} className="w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 rounded-2xl shadow-lg mb-4">Prueba de Colores</button>
         </div>
     );
 };

@@ -38,13 +38,13 @@ export const IntroLesson = ({ onComplete }) => {
     if(mode === 'quiz') return <div className="p-6 max-w-md mx-auto pb-24"><LessonQuiz pool={quizPool} questionCount={10} onComplete={() => setMode('learn')} /></div>;
 
     return (
-        <div className="p-6 max-w-md mx-auto pb-24 space-y-6">
-            <div className="flex gap-2 p-1 bg-gray-800 rounded-xl">
+        <div className="p-6 max-w-4xl mx-auto pb-24 space-y-6">
+            <div className="flex gap-2 p-1 bg-gray-800 rounded-xl max-w-sm mx-auto">
                 <button onClick={() => setTab('first')} className={`flex-1 py-2 rounded-lg font-bold text-sm transition-all ${tab === 'first' ? 'bg-pink-600 text-white' : 'text-gray-400 hover:text-white'}`}>Tú (Informal)</button>
                 <button onClick={() => setTab('third')} className={`flex-1 py-2 rounded-lg font-bold text-sm transition-all ${tab === 'third' ? 'bg-pink-600 text-white' : 'text-gray-400 hover:text-white'}`}>Él/Ella/Usted</button>
             </div>
             
-            <div className="space-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {(tab === 'first' ? firstPerson : thirdPerson).map((item, i) => (
                     <div key={i} className="bg-gray-800 p-4 rounded-xl border border-gray-700">
                         <div className="flex justify-between items-center mb-2">
@@ -56,8 +56,10 @@ export const IntroLesson = ({ onComplete }) => {
                 ))}
             </div>
 
-            <button onClick={() => setMode('quiz')} className="w-full bg-pink-600 hover:bg-pink-500 text-white font-bold py-4 rounded-2xl shadow-lg mt-4">Tomar Prueba</button>
-            <button onClick={onComplete} className="w-full border border-gray-600 text-gray-400 font-bold py-3 rounded-2xl mt-2">Volver</button>
+            <div className="max-w-md mx-auto">
+                 <button onClick={() => setMode('quiz')} className="w-full bg-pink-600 hover:bg-pink-500 text-white font-bold py-4 rounded-2xl shadow-lg mt-4">Tomar Prueba</button>
+                 <button onClick={onComplete} className="w-full border border-gray-600 text-gray-400 font-bold py-3 rounded-2xl mt-2">Volver</button>
+            </div>
         </div>
     );
 };
