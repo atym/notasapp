@@ -1,7 +1,4 @@
-import { useState } from 'react';
-import { AdminSeeder } from './AdminSeeder.jsx';
 import { FiArrowLeft, FiBriefcase, FiCpu } from 'react-icons/fi';
-import { FaBriefcaseMedical } from 'react-icons/fa';
 
 export const AdminPanel = ({ onBack }) => {
     return (
@@ -39,19 +36,6 @@ export const AdminPanel = ({ onBack }) => {
                     Generar y guardar (Próximamente)
                     </button>
                 </div>
-            </div>
-
-            {/* SECTION 2: DATABASE SEEDERS */}
-            <div className="bg-gray-800 rounded-xl p-6 border border-yellow-500/30">
-                <h2 className="text-xl font-bold text-yellow-500 mb-4 flex items-center gap-2">
-                    <FaBriefcaseMedical size={20} />
-                    Semillas de base de datos
-                </h2>
-                <p className="text-xs text-gray-400 mb-4">
-                    Usa estos botones para enviar datos locales de <code>data.js</code> a Firestore.
-                </p>
-                {/* We reuse your existing Seeder component here */}
-                <AdminSeeder />
             </div>
         </div>
     );

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FiType, FiHash, FiDroplet, FiClock, FiSun, FiUsers, FiMessageCircle, FiList, FiHeart, FiMic, FiSmile, FiBriefcase, FiFlag, FiUser, FiBookOpen, FiAward } from 'react-icons/fi';
-import { db } from '../firebase';
+import { db } from '../../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 
 export const Dashboard = ({ onSelectLesson }) => {

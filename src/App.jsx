@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { FiArrowLeft } from 'react-icons/fi'; 
-import { Dashboard } from './components/Dashboard.jsx';
-import { AdminPanel } from './components/AdminPanel.jsx';
+import { Dashboard } from './components/views/Dashboard.jsx';
+import { AdminPanel } from './components/views/AdminPanel.jsx';
 
-import { VocabMix } from './components/VocabMix.jsx';
+import { VocabMix } from './components/views/VocabMix.jsx';
 import { FinalQuiz } from './components/lessons/quizzes/FinalQuiz.jsx';
 
 // IMPORT THE NEW MANAGERS
