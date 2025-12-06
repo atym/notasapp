@@ -9,12 +9,7 @@ import { FinalQuiz } from './components/FinalQuiz.jsx';
 // IMPORT THE NEW MANAGERS
 import BasicVocabManager from './components/lessons/basicvocab/index.jsx';
 import SituationalManager from './components/lessons/situational/index.jsx';
-
-import { 
-    CalendarLesson, CharacterLesson, 
-    VerbLesson, JobsLesson, NationalitiesLesson, 
-    PronounsLesson, ConjugationSection 
-} from './components/Lessons.jsx';
+import GrammarManager from './components/lessons/grammar/index.jsx';
 
 function App() {
     const [view, setView] = useState('dashboard');
@@ -40,6 +35,7 @@ function App() {
             case 'numbers':
             case 'colors': // MOVED HERE
             case 'weather':
+            case 'calendar':
                 return (
                     <LessonWrapper>
                         <BasicVocabManager lessonId={view} />
@@ -50,22 +46,28 @@ function App() {
             case 'feelings':
             case 'intro':
             case 'interview':
+            case 'characters':
+            case 'jobs':
+            case 'nationalities':
                 return (
                     <LessonWrapper>
                         <SituationalManager lessonId={view} />
                     </LessonWrapper>
                 );
+            
+            // --- GRAMMAR (MANAGED) ---
+            case 'pronouns':
+            case 'conjugations':
+            case 'verbs':
+                return (
+                    <LessonWrapper>
+                        <GrammarManager lessonId={view} />
+                    </LessonWrapper>
+                );
 
             // --- LEGACY ROUTES ---
-            case 'calendar': return <CalendarLesson onComplete={()=>setView('dashboard')} />;
-            case 'characters': return <CharacterLesson onComplete={()=>setView('dashboard')} />;
-            case 'verbs': return <VerbLesson onComplete={()=>setView('dashboard')} />;
             case 'vocabmix': return <VocabMix onComplete={()=>setView('dashboard')} />;
-            case 'jobs': return <JobsLesson on_Complete={()=>setView('dashboard')} />;
-            case 'nationalities': return <NationalitiesLesson onComplete={()=>setView('dashboard')} />;
             case 'finalquiz': return <FinalQuiz onComplete={()=>setView('dashboard')} />;
-            case 'pronouns': return <PronounsLesson onComplete={()=>setView('dashboard')} />;
-            case 'conjugations': return <ConjugationSection onComplete={()=>setView('dashboard')} />;
             default: return <Dashboard onSelectLesson={setView} />;
         }
     };

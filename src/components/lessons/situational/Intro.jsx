@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { LessonQuiz } from '../../LessonQuiz';
 
-export const IntroLesson = ({ onComplete }) => {
+const IntroLesson = () => {
     const [mode, setMode] = useState('learn');
     const [tab, setTab] = useState('first'); 
     
@@ -58,8 +58,9 @@ export const IntroLesson = ({ onComplete }) => {
 
             <div className="max-w-md mx-auto">
                  <button onClick={() => setMode('quiz')} className="w-full bg-pink-600 hover:bg-pink-500 text-white font-bold py-4 rounded-2xl shadow-lg mt-4">Tomar Prueba</button>
-                 <button onClick={onComplete} className="w-full border border-gray-600 text-gray-400 font-bold py-3 rounded-2xl mt-2">Volver</button>
             </div>
         </div>
     );
 };
+
+export default IntroLesson;

@@ -27,7 +27,7 @@ export const Dashboard = ({ onSelectLesson }) => {
             color: "text-purple-400",
             lessons: [
                 { id: 'alphabet', title: 'Alfabeto', icon: <Icons.Type />, color: 'bg-purple-600' },
-                { id: 'vocales', title: 'Las Vocales', icon: <Icons.Type />, color: 'bg-pink-500' }, 
+                { id: 'vocales', title: 'Vocales', icon: <Icons.Type />, color: 'bg-pink-500' }, 
                 { id: 'numbers', title: 'Números', icon: <Icons.Hash />, color: 'bg-blue-500' },
                 { id: 'colors', title: 'Colores', icon: <Icons.Palette />, color: 'bg-red-500' },
                 { id: 'calendar', title: 'Calendario', icon: <Icons.Clock />, color: 'bg-green-600' },

@@ -4,6 +4,7 @@ import Vowels from './Vowels'; // Corrected import
 import NumbersLesson from './Numbers';
 import ColorsLesson from './Colors';
 import { WeatherLesson } from './Weather';
+import CalendarLesson from './Calendar';
 
 const BasicVocabManager = ({ lessonId }) => {
   switch (lessonId) {
@@ -17,6 +18,8 @@ const BasicVocabManager = ({ lessonId }) => {
         return <ColorsLesson />;
     case 'weather':
         return <WeatherLesson />;
+    case 'calendar':
+        return <CalendarLesson />;
 
     default:
       return (

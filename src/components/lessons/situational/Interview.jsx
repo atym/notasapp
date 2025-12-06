@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Icons } from '../../Icons';
 
-export const InterviewLesson = ({ onComplete }) => {
+const InterviewLesson = () => {
     const QUESTIONS = [
         { topic: "Nombre", tu: "¿Cómo te llamas?", ud: "¿Cómo se llama?", ans: "Me llamo... / Soy..." },
         { topic: "Apellido", tu: "¿Cómo te apellidas?", ud: "¿Cómo se apellida?", ans: "Me apellido..." },
@@ -169,3 +169,5 @@ export const InterviewLesson = ({ onComplete }) => {
         </div>
     );
 };
+
+export default InterviewLesson;
