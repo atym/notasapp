@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Volume2, ExternalLink, Play, AlertCircle, Loader2 } from 'lucide-react';
-// FIX: Go up 3 levels to reach src/firebase.js
+import { Volume2, ExternalLink, Play, AlertCircle, Loader2, HelpCircle } from 'lucide-react';
 import { db } from '../../../firebase.js'; 
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { LessonQuiz } from '../quizzes/LessonQuiz';
 
 const Vowels = () => {
   const [vowels, setVowels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [videoError, setVideoError] = useState(false);
+  const [quizActive, setQuizActive] = useState(false);
+  const [questionPool, setQuestionPool] = useState([]);
 
   // --- 1. Fetch Data from Firestore ---
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Query the 'lesson_vocales' collection
         const q = query(collection(db, "lesson_vocales"), orderBy("order"));
         const querySnapshot = await getDocs(q);
         const data = querySnapshot.docs.map(doc => doc.data());
@@ -42,6 +43,33 @@ const Vowels = () => {
     window.speechSynthesis.speak(utterance);
   };
 
+  // --- Quiz Logic ---
+  const generateQuestionPool = () => {
+    const allVowels = ['A', 'E', 'I', 'O', 'U'];
+    let questions = [];
+
+    // Create 3 questions for each vowel
+    for (let i = 0; i < 3; i++) {
+        questions.push(...allVowels);
+    }
+
+    const pool = questions.map(vowel => {
+        return {
+            q: (
+                <button onClick={() => speak(vowel)} className="w-full h-full flex items-center justify-center gap-2 text-pink-400 text-lg font-bold">
+                    <Volume2 size={24} /> Escuchar Sonido
+                </button>
+            ),
+            a: vowel,
+            opts: [...allVowels].sort(() => 0.5 - Math.random()),
+            type: 'mc'
+        };
+    });
+
+    setQuestionPool(pool.sort(() => 0.5 - Math.random()));
+    setQuizActive(true);
+  };
+
   const videoId = "PXFMC-g0Jt8";
   const youtubeWebUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
@@ -49,6 +77,19 @@ const Vowels = () => {
     return (
         <div className="min-h-screen w-full bg-[#111827] flex items-center justify-center">
             <Loader2 className="animate-spin text-pink-500 w-8 h-8" />
+        </div>
+    );
+  }
+
+  if (quizActive) {
+    return (
+        <div className="w-full bg-[#111827] text-gray-100 space-y-8 animate-fade-in p-4">
+            <h2 className="text-xl font-black text-white tracking-tight">Prueba de Vocales</h2>
+            <LessonQuiz
+                onComplete={() => setQuizActive(false)}
+                questionCount={15}
+                pool={questionPool}
+            />
         </div>
     );
   }
@@ -85,6 +126,14 @@ const Vowels = () => {
                 </button>
                 ))}
             </div>
+
+            {/* START QUIZ BUTTON */}
+            <button
+                onClick={generateQuestionPool}
+                className="w-full flex items-center justify-center gap-3 py-3 rounded-xl border border-purple-500/30 bg-purple-500/10 text-purple-300 hover:bg-purple-500/20 transition-all font-medium text-sm">
+                <HelpCircle size={16} />
+                Empezar Prueba
+            </button>
 
             {/* SECTION 2: VIDEO LOGIC */}
             <div className="space-y-3">

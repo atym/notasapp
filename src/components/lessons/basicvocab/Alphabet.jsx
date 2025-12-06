@@ -44,11 +44,15 @@ const Alphabet = () => {
     if (text === 'B') {
       utterance = new SpeechSynthesisUtterance('be');
     } else if (text === 'V') {
-      utterance = new SpeechSynthesisUtterance('ve');
+      utterance = new SpeechSynthesisUtterance('uve');
     } else if (text === 'LL') {
       utterance = new SpeechSynthesisUtterance('ye');
     } else if (text === 'RR') {
       utterance = new SpeechSynthesisUtterance('erre');
+    } else if (text === 'Y') {
+        utterance = new SpeechSynthesisUtterance('i griega');
+    } else if (text === 'W') {
+        utterance = new SpeechSynthesisUtterance('doble u');
     } else {
       utterance = new SpeechSynthesisUtterance(text.toLowerCase());
     }
@@ -192,16 +196,14 @@ const Alphabet = () => {
         <div className="grid grid-cols-2 gap-2">
             <button 
                 onClick={scrollToVideo}
-                className="w-full flex items-center justify-center gap-3 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 transition-all text-white font-bold shadow-lg shadow-indigo-600/20"
-            >
-                <Youtube size={18} />
+                className="w-full flex items-center justify-center gap-3 py-3 rounded-xl border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 hover:bg-indigo-500/20 transition-all font-medium text-sm">
+                <Youtube size={16} />
                 Ver video
             </button>
             <button
                 onClick={generateQuestionPool}
-                className="w-full flex items-center justify-center gap-3 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 active:bg-purple-700 transition-all text-white font-bold shadow-lg shadow-purple-600/20"
-            >
-                <HelpCircle size={18} />
+                className="w-full flex items-center justify-center gap-3 py-3 rounded-xl border border-purple-500/30 bg-purple-500/10 text-purple-300 hover:bg-purple-500/20 transition-all font-medium text-sm">
+                <HelpCircle size={16} />
                 Empezar Prueba
             </button>
         </div>
