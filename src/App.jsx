@@ -3,6 +3,7 @@ import { FiArrowLeft } from 'react-icons/fi';
 import { Dashboard } from './components/views/Dashboard.jsx';
 import { AdminPanel } from './components/views/AdminPanel.jsx';
 import { Login } from './components/views/Login.jsx';
+import LaunchScreen from './components/views/LaunchScreen.jsx';
 import { auth } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 
@@ -20,17 +21,21 @@ const devUserEmail = import.meta.env.VITE_DEV_USER_EMAIL || 'dev@local.host';
 function App() {
     const [view, setView] = useState('dashboard');
     const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        // If bypass is active, set a fake user from .env and skip listening for auth changes
+        // If bypass is active, set a fake user and finish loading
         if (devModeBypass) {
             setUser({ email: devUserEmail, uid: 'dev-user' });
+            setIsLoading(false);
             return;
         }
 
         // Otherwise, listen for real authentication state changes
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
+            // Once auth state is determined, set loading to false
+            setIsLoading(false);
         });
 
         return () => unsubscribe();
@@ -92,11 +97,17 @@ function App() {
         }
     };
 
-    // If there is no user (real or fake), show the Login page.
+    // Show the launch screen while checking for authentication
+    if (isLoading) {
+        return <LaunchScreen />;
+    }
+
+    // If loading is finished and there is no user, show the Login page.
     if (!user) {
         return <Login />;
     }
 
+    // If loading is finished and there is a user, show the main app.
     return (
         <div className="min-h-screen bg-gray-900 text-white font-sans antialiased">
             {view !== 'admin' && (
