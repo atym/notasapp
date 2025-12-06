@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Volume2, ExternalLink, Play, AlertCircle, Loader2, Youtube } from 'lucide-react';
+import { Volume2, ExternalLink, Play, AlertCircle, Loader2, Youtube, HelpCircle } from 'lucide-react';
 import { db } from '../../../firebase'; 
 import { collection, getDocs, query } from 'firebase/firestore';
+import { LessonQuiz } from '../quizzes/LessonQuiz';
 
 const Alphabet = () => {
   const [letters, setLetters] = useState([]);
@@ -9,6 +10,8 @@ const Alphabet = () => {
   const [loading, setLoading] = useState(true);
   const [videoError, setVideoError] = useState(false);
   const videoRef = useRef(null);
+  const [quizActive, setQuizActive] = useState(false);
+  const [questionPool, setQuestionPool] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,6 +58,64 @@ const Alphabet = () => {
     window.speechSynthesis.speak(utterance);
   };
 
+  const generateQuestionPool = () => {
+    const confusables = {
+        'B': ['V'], 
+        'V': ['B'],
+        'C': ['S', 'Z', 'K', 'Q'],
+        'S': ['Z', 'C', 'X'],
+        'Z': ['S', 'C'],
+        'G': ['J'],
+        'J': ['G', 'X'],
+        'LL': ['Y'], 
+        'Y': ['LL', 'I'],
+        'I': ['Y'],
+        'M': ['N', 'Ñ'], 
+        'N': ['M', 'Ñ'], 
+        'Ñ': ['M', 'N'],
+        'K': ['Q', 'C'],
+        'Q': ['K', 'C'],
+        'X': ['J', 'S']
+    };
+
+    const shuffledLetters = [...letters].sort(() => 0.5 - Math.random()).slice(0, 15);
+
+    const pool = shuffledLetters.map(letter => {
+        const correctAnswer = letter.letter;
+        const options = [correctAnswer];
+
+        // Add confusable letters
+        if (confusables[correctAnswer]) {
+            const confusableOptions = confusables[correctAnswer].filter(c => !options.includes(c));
+            if (confusableOptions.length > 0) {
+                options.push(confusableOptions[Math.floor(Math.random() * confusableOptions.length)]);
+            }
+        }
+
+        // Add other random letters
+        while (options.length < 4) {
+            const randomLetter = letters[Math.floor(Math.random() * letters.length)].letter;
+            if (!options.includes(randomLetter)) {
+                options.push(randomLetter);
+            }
+        }
+
+        return {
+            q: (
+                <button onClick={() => speak(correctAnswer)} className="w-full h-full flex items-center justify-center gap-2 text-indigo-400 text-lg font-bold">
+                    <Volume2 size={24} /> Escuchar Sonido
+                </button>
+            ),
+            a: correctAnswer,
+            opts: options.sort(() => 0.5 - Math.random()),
+            type: 'mc'
+        };
+    });
+
+    setQuestionPool(pool);
+    setQuizActive(true);
+};
+
   const videoId = "1wJIkTuckEI";
   const youtubeWebUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
@@ -62,6 +123,19 @@ const Alphabet = () => {
     return (
         <div className="w-full flex items-center justify-center p-8">
             <Loader2 className="animate-spin text-indigo-400 w-8 h-8" />
+        </div>
+    );
+  }
+
+  if (quizActive) {
+    return (
+        <div className="w-full bg-[#111827] text-gray-100 space-y-8 animate-fade-in p-4">
+            <h2 className="text-xl font-black text-white tracking-tight">Prueba de Alfabeto</h2>
+            <LessonQuiz
+                onComplete={() => setQuizActive(false)}
+                questionCount={15}
+                pool={questionPool}
+            />
         </div>
     );
   }
@@ -115,13 +189,22 @@ const Alphabet = () => {
             </ul>
         </div>
 
-        <button 
-            onClick={scrollToVideo}
-            className="w-full flex items-center justify-center gap-3 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 transition-all text-white font-bold shadow-lg shadow-indigo-600/20"
-        >
-            <Youtube size={18} />
-            Ver video de pronunciación
-        </button>
+        <div className="grid grid-cols-2 gap-2">
+            <button 
+                onClick={scrollToVideo}
+                className="w-full flex items-center justify-center gap-3 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 transition-all text-white font-bold shadow-lg shadow-indigo-600/20"
+            >
+                <Youtube size={18} />
+                Ver video
+            </button>
+            <button
+                onClick={generateQuestionPool}
+                className="w-full flex items-center justify-center gap-3 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 active:bg-purple-700 transition-all text-white font-bold shadow-lg shadow-purple-600/20"
+            >
+                <HelpCircle size={18} />
+                Empezar Prueba
+            </button>
+        </div>
         
         {/* Letter List */}
         <div className="grid grid-cols-1 gap-2">
