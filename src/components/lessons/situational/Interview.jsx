@@ -5,14 +5,14 @@ export const InterviewLesson = ({ onComplete }) => {
     const QUESTIONS = [
         { topic: "Nombre", tu: "¿Cómo te llamas?", ud: "¿Cómo se llama?", ans: "Me llamo... / Soy..." },
         { topic: "Apellido", tu: "¿Cómo te apellidas?", ud: "¿Cómo se apellida?", ans: "Me apellido..." },
+        { topic: "Profesión", tu: "¿A qué te dedicas?", ud: "¿A qué se dedica?", ans: "Soy..." },
+        { topic: "Lugar de Trabajo", tu: "¿Dónde trabajas?", ud: "¿Dónde trabaja?", ans: "Trabajo en..." },
+        { topic: "Domicilio", tu: "¿Dónde vives?", ud: "¿Dónde vive?", ans: "Vivo en..." },
+        { topic: "Lenguas", tu: "¿Qué idioma hablas?", ud: "¿Qué idioma habla?", ans: "Hablo..." },
         { topic: "Nacionalidad", tu: "¿De dónde eres?", ud: "¿De dónde es?", ans: "Soy de... / Soy..." },
         { topic: "Edad", tu: "¿Cuántos años tienes?", ud: "¿Cuántos años tiene?", ans: "Tengo ___ años" },
-        { topic: "Profesión", tu: "¿A qué te dedicas?", ud: "¿A qué se dedica?", ans: "Soy..." },
-        { topic: "Lenguas", tu: "¿Qué idioma hablas?", ud: "¿Qué idioma habla?", ans: "Hablo..." },
-        { topic: "Domicilio", tu: "¿Dónde vives?", ud: "¿Dónde vive?", ans: "Vivo en..." },
-        { topic: "Lugar de Trabajo", tu: "¿Dónde trabajas?", ud: "¿Dónde trabaja?", ans: "Trabajo en..." },
-        { topic: "Teléfono", tu: "¿Tienes número de teléfono?", ud: "¿Tiene número de teléfono?", ans: "Sí, es el... / No" },
-        { topic: "Correo", tu: "¿Tienes correo electrónico?", ud: "¿Tiene correo electrónico?", ans: "Sí, es el... / No" }
+        { topic: "Correo", tu: "¿Tienes correo electrónico?", ud: "¿Tiene correo electrónico?", ans: "Sí, es el... / No" },
+        { topic: "Teléfono", tu: "¿Tienes número de teléfono?", ud: "¿Tiene número de teléfono?", ans: "Sí, es el... / No" }
     ];
 
     const [flippedState, setFlippedState] = useState({});
@@ -87,6 +87,38 @@ export const InterviewLesson = ({ onComplete }) => {
 
                 {/* Sidebar */}
                 <div className="space-y-6">
+                    <div className="bg-gray-800 border border-indigo-500/30 p-4 rounded-xl">
+                        <h3 className="font-bold text-indigo-400 mb-3 text-lg flex items-center gap-2"><Icons.Users size={18}/> ¿Tú o Usted?</h3>
+                        <div className="space-y-3 text-sm">
+                            <div className="bg-gray-900/50 p-3 rounded-lg border-l-4 border-cyan-500">
+                                <h4 className="font-bold text-cyan-400 mb-1">Tú (Informal)</h4>
+                                <p className="text-gray-300">Úsalo con amigos, familia, gente de tu edad y niños.</p>
+                            </div>
+                             <div className="bg-gray-900/50 p-3 rounded-lg border-l-4 border-indigo-400">
+                                <h4 className="font-bold text-indigo-300 mb-1">Usted (Formal)</h4>
+                                <p className="text-gray-300">Úsalo con extraños, personas mayores y figuras de autoridad para mostrar respeto.</p>
+                            </div>
+                            <div className="bg-gray-900/50 p-3 rounded-lg border-l-4 border-green-500">
+                                <h4 className="font-bold text-green-400 mb-1">Cambiando a Tú</h4>
+                                <p className="text-gray-300">Si alguien dice <span className="font-mono text-white bg-gray-700 px-1.5 py-0.5 rounded">"puedes tutearme"</span>, puedes cambiar de 'Usted' a 'Tú'.</p>
+                            </div>
+                        </div>
+                        <p className="text-xs text-gray-500 mt-4 italic text-center">¡En caso de duda, usa <span className="font-bold text-white">Usted</span>!</p>
+                    </div>
+
+                    <div className="bg-gray-800 border border-orange-500/30 p-4 rounded-xl">
+                        <h3 className="font-bold text-orange-400 mb-3 text-lg flex items-center gap-2"><Icons.Award size={18}/> Expresando Pasión</h3>
+                        <div className="p-3 bg-gray-900 rounded-lg text-sm text-gray-300">
+                            <p className="mb-2">En México, al responder a <span className="font-bold text-white">"¿A qué te dedicas?"</span>, es común usar <span className="font-bold text-white">"Me dedico a..."</span> para hablar de tu pasión o campo, no solo tu trabajo.</p>
+                            <p>Por ejemplo:</p>
+                            <ul className="list-disc list-inside mt-1 space-y-1 text-orange-300">
+                                <li>Me dedico a la educación.</li>
+                                <li>Me dedico a la tecnología.</li>
+                                <li>Me dedico al campo.</li>
+                            </ul>
+                        </div>
+                    </div>
+
                     <div className="bg-gray-800 border border-green-500/30 p-4 rounded-xl">
                         <h3 className="font-bold text-green-400 mb-3 text-lg flex items-center gap-2"><Icons.MapPin size={18}/> Detalles de Vivir</h3>
                         <div className="space-y-3">
@@ -133,10 +165,6 @@ export const InterviewLesson = ({ onComplete }) => {
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div className="max-w-md mx-auto">
-                 <button onClick={onComplete} className="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-4 rounded-2xl shadow-lg">Volver</button>
             </div>
         </div>
     );
