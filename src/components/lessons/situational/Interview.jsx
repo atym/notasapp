@@ -61,7 +61,7 @@ const InterviewLesson = () => {
     };
 
     return (
-        <div className="p-6 max-w-5xl mx-auto pb-24 space-y-6">
+        <div className="p-4 sm:p-6 max-w-5xl mx-auto pb-24 space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
                 {/* Main Content */}
@@ -87,7 +87,7 @@ const InterviewLesson = () => {
 
                 {/* Sidebar */}
                 <div className="space-y-6">
-                    <div className="bg-gray-800 border border-indigo-500/30 p-4 rounded-xl">
+                    <div className="bg-gray-800 border border-indigo-500/30 p-3 sm:p-4 rounded-xl">
                         <h3 className="font-bold text-indigo-400 mb-3 text-lg flex items-center gap-2"><FiUsers size={18}/> ¿Tú o Usted?</h3>
                         <div className="space-y-3 text-sm">
                             <div className="bg-gray-900/50 p-3 rounded-lg border-l-4 border-cyan-500">
@@ -106,7 +106,7 @@ const InterviewLesson = () => {
                         <p className="text-xs text-gray-500 mt-4 italic text-center">¡En caso de duda, usa <span className="font-bold text-white">Usted</span>!</p>
                     </div>
 
-                    <div className="bg-gray-800 border border-orange-500/30 p-4 rounded-xl">
+                    <div className="bg-gray-800 border border-orange-500/30 p-3 sm:p-4 rounded-xl">
                         <h3 className="font-bold text-orange-400 mb-3 text-lg flex items-center gap-2"><FiAward size={18}/> Expresando Pasión</h3>
                         <div className="p-3 bg-gray-900 rounded-lg text-sm text-gray-300">
                             <p className="mb-2">En México, al responder a <span className="font-bold text-white">"¿A qué te dedicas?"</span>, es común usar <span className="font-bold text-white">"Me dedico a..."</span> para hablar de tu pasión o campo, no solo tu trabajo.</p>
@@ -119,7 +119,7 @@ const InterviewLesson = () => {
                         </div>
                     </div>
 
-                    <div className="bg-gray-800 border border-green-500/30 p-4 rounded-xl">
+                    <div className="bg-gray-800 border border-green-500/30 p-3 sm:p-4 rounded-xl">
                         <h3 className="font-bold text-green-400 mb-3 text-lg flex items-center gap-2"><FiMapPin size={18}/> Detalles de Vivir</h3>
                         <div className="space-y-3">
                             <div className="p-3 bg-gray-900 rounded-lg">
@@ -140,7 +140,7 @@ const InterviewLesson = () => {
                         </div>
                     </div>
 
-                    <div className="bg-gray-800 border border-purple-500/30 p-4 rounded-xl">
+                    <div className="bg-gray-800 border border-purple-500/30 p-3 sm:p-4 rounded-xl">
                         <h3 className="font-bold text-purple-400 mb-3 text-lg">Correo Electrónico</h3>
                         <div className="grid grid-cols-4 gap-2 text-center mb-3">
                             <div className="bg-gray-900 rounded p-2">
