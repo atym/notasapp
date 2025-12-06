@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Icons } from './Icons';
+import { FiType, FiHash, FiDroplet, FiClock, FiSun, FiUsers, FiMessageCircle, FiList, FiHeart, FiMic, FiSmile, FiBriefcase, FiFlag, FiUser, FiBookOpen, FiAward } from 'react-icons/fi';
 import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 
@@ -26,41 +26,41 @@ export const Dashboard = ({ onSelectLesson }) => {
             title: "Vocabulario Básico",
             color: "text-purple-400",
             lessons: [
-                { id: 'alphabet', title: 'Alfabeto', icon: <Icons.Type />, color: 'bg-purple-600' },
-                { id: 'vocales', title: 'Vocales', icon: <Icons.Type />, color: 'bg-pink-500' }, 
-                { id: 'numbers', title: 'Números', icon: <Icons.Hash />, color: 'bg-blue-500' },
-                { id: 'colors', title: 'Colores', icon: <Icons.Palette />, color: 'bg-red-500' },
-                { id: 'calendar', title: 'Calendario', icon: <Icons.Clock />, color: 'bg-green-600' },
-                { id: 'weather', title: 'El Clima', icon: <Icons.Sun />, color: 'bg-orange-500' },
+                { id: 'alphabet', title: 'Alfabeto', icon: <FiType />, color: 'bg-purple-600' },
+                { id: 'vocales', title: 'Vocales', icon: <FiType />, color: 'bg-pink-500' }, 
+                { id: 'numbers', title: 'Números', icon: <FiHash />, color: 'bg-blue-500' },
+                { id: 'colors', title: 'Colores', icon: <FiDroplet />, color: 'bg-red-500' },
+                { id: 'calendar', title: 'Calendario', icon: <FiClock />, color: 'bg-green-600' },
+                { id: 'weather', title: 'El Clima', icon: <FiSun />, color: 'bg-orange-500' },
             ]
         },
         {
             title: "Gramática",
             color: "text-indigo-400",
             lessons: [
-                { id: 'pronouns', title: 'Pronombres', icon: <Icons.Users />, color: 'bg-indigo-500' },
-                { id: 'verbs', title: 'Ser/Estar', icon: <Icons.BrainCircuit />, color: 'bg-emerald-600' },
-                { id: 'conjugations', title: 'Conjugación', icon: <Icons.ListChecks />, color: 'bg-cyan-600' },
+                { id: 'pronouns', title: 'Pronombres', icon: <FiUsers />, color: 'bg-indigo-500' },
+                { id: 'verbs', title: 'Ser/Estar', icon: <FiMessageCircle />, color: 'bg-emerald-600' },
+                { id: 'conjugations', title: 'Conjugación', icon: <FiList />, color: 'bg-cyan-600' },
             ]
         },
         {
             title: "Situacional",
             color: "text-pink-400",
             lessons: [
-                { id: 'intro', title: 'Presentarse', icon: <Icons.HeartHandshake />, color: 'bg-pink-500' },
-                { id: 'interview', title: 'Entrevista', icon: <Icons.Mic />, color: 'bg-cyan-600' },
-                { id: 'feelings', title: 'Saludos', icon: <Icons.SmilePlus />, color: 'bg-yellow-500' },
-                { id: 'jobs', title: 'Profesiones', icon: <Icons.BriefcaseMedical />, color: 'bg-teal-600' },
-                { id: 'nationalities', title: 'Países', icon: <Icons.Flag />, color: 'bg-rose-600' },
-                { id: 'characters', title: 'Famosos', icon: <Icons.User />, color: 'bg-indigo-600' },
+                { id: 'intro', title: 'Presentarse', icon: <FiHeart />, color: 'bg-pink-500' },
+                { id: 'interview', title: 'Entrevista', icon: <FiMic />, color: 'bg-cyan-600' },
+                { id: 'feelings', title: 'Saludos', icon: <FiSmile />, color: 'bg-yellow-500' },
+                { id: 'jobs', title: 'Profesiones', icon: <FiBriefcase />, color: 'bg-teal-600' },
+                { id: 'nationalities', title: 'Países', icon: <FiFlag />, color: 'bg-rose-600' },
+                { id: 'characters', title: 'Famosos', icon: <FiUser />, color: 'bg-indigo-600' },
             ]
         },
         {
             title: "Pruebas",
             color: "text-yellow-400",
             lessons: [
-                { id: 'vocabmix', title: 'Vocab Mix', icon: <Icons.BookA />, color: 'bg-pink-600' },
-                { id: 'finalquiz', title: 'Examen Final', icon: <Icons.Award />, color: 'bg-yellow-600' },
+                { id: 'vocabmix', title: 'Vocab Mix', icon: <FiBookOpen />, color: 'bg-pink-600' },
+                { id: 'finalquiz', title: 'Examen Final', icon: <FiAward />, color: 'bg-yellow-600' },
             ]
         }
     ];
@@ -114,7 +114,7 @@ export const Dashboard = ({ onSelectLesson }) => {
                     onClick={() => onSelectLesson('admin')} 
                     className="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-700 hover:bg-gray-800 text-xs text-gray-500 transition-colors"
                 >
-                    <Icons.Briefcase size={14} />
+                    <FiBriefcase size={14} />
                     <span>Panel de Control</span>
                 </button>
             </div>

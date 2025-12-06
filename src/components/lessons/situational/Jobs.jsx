@@ -1,7 +1,7 @@
 import { db } from '../../../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { useState, useEffect, useMemo } from 'react';
-import { Icons } from '../../Icons';
+import { FiChevronRight } from 'react-icons/fi';
 import { LessonQuiz } from '../../LessonQuiz';
 import { getSmartDistractors } from '../../../data';
 
@@ -44,7 +44,7 @@ const JobsLesson = () => {
                             <div className="text-3xl">{job.emoji}</div>
                             <div className="font-bold text-white text-base capitalize">{job.masc} <span className="text-gray-500 text-sm font-normal">/ {job.fem}</span></div>
                         </div>
-                        <Icons.ChevronRight size={16} className="text-gray-600" />
+                        <FiChevronRight size={16} className="text-gray-600" />
                     </div>
                     <div className="absolute inset-0 bg-teal-900/40 p-4 rounded-xl border border-teal-500 flex items-center justify-center backface-hidden rotate-y-180">
                         <span className="font-bold text-teal-200 text-lg">{job.eng}</span>

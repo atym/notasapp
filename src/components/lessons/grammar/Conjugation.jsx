@@ -1,7 +1,7 @@
 import { db } from '../../../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { useState, useEffect, useMemo } from 'react';
-import { Icons } from '../../Icons';
+import { FiArrowLeft, FiChevronRight } from 'react-icons/fi';
 import { LessonQuiz } from '../../LessonQuiz';
 
 const ConjugationLesson = () => {
@@ -55,7 +55,7 @@ const ConjugationLesson = () => {
     
     if (selectedVerb) return (
         <div className="p-6 max-w-md mx-auto pb-24 space-y-4">
-            <button onClick={() => setSelectedVerb(null)} className="flex items-center gap-2 text-cyan-400 mb-2"><Icons.ArrowLeft size={20}/> Volver</button>
+            <button onClick={() => setSelectedVerb(null)} className="flex items-center gap-2 text-cyan-400 mb-2"><FiArrowLeft size={20}/> Volver</button>
             <h2 className="text-2xl font-bold text-white">{selectedVerb.v} <span className="text-gray-500 text-lg">({selectedVerb.t})</span></h2>
             <div className="bg-gray-800 rounded-xl overflow-hidden border border-gray-700">
                 <div className="divide-y divide-gray-700">
@@ -80,7 +80,7 @@ const ConjugationLesson = () => {
                             <span className="block font-bold text-lg text-white">{v.v}</span>
                             <span className="text-xs text-gray-400">{v.t}</span>
                         </div>
-                        <Icons.ChevronRight size={20} className="text-gray-600"/>
+                        <FiChevronRight size={20} className="text-gray-600"/>
                     </button>
                 ))}
             </div>

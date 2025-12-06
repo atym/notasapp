@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Icons } from './components/Icons.jsx'; 
+import { FiArrowLeft } from 'react-icons/fi'; 
 import { Dashboard } from './components/Dashboard.jsx';
 import { AdminPanel } from './components/AdminPanel.jsx';
 
@@ -78,7 +78,7 @@ function App() {
                  <div className="sticky top-0 z-50 bg-gray-900/90 backdrop-blur-md border-b border-gray-800 p-4 flex items-center justify-between">
                     {view !== 'dashboard' ? 
                         <button onClick={()=>setView('dashboard')} className="flex items-center gap-2 text-indigo-400 font-bold">
-                            <Icons.ArrowLeft size={20}/> Menú
+                            <FiArrowLeft size={20}/> Menú
                         </button> 
                         : <div className="text-xl font-black text-indigo-500 tracking-tighter">NOTAS<span className="text-pink-500">.APP</span></div>
                     }

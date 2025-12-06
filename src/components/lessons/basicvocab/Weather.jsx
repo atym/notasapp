@@ -2,10 +2,22 @@ import { useState, useEffect, useMemo } from 'react';
 import { db } from '../../../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { LessonQuiz } from '../../LessonQuiz';
-import { Icons } from '../../Icons';
 import { getSmartDistractors } from '../../../data';
+import {
+    FiSun, FiCloud, FiCloudRain, FiWind, FiThermometer, FiZap, FiHelpCircle 
+} from 'react-icons/fi';
 
-export const WeatherLesson = ({ onComplete }) => {
+const iconMap = {
+    Sun: FiSun,
+    Cloud: FiCloud,
+    CloudRain: FiCloudRain,
+    Wind: FiWind,
+    Thermometer: FiThermometer,
+    Zap: FiZap,
+    Snowflake: ()=><span>❄️</span> // Using emoji for Snowflake as it's not in Feather
+};
+
+const WeatherLesson = () => {
     const [mode, setMode] = useState('learn');
     const [weather, setWeather] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -27,7 +39,7 @@ export const WeatherLesson = ({ onComplete }) => {
 
     // Helper to render the correct icon from the string name in DB
     const getIcon = (iconName) => {
-        const IconComponent = Icons[iconName] || Icons.HelpCircle;
+        const IconComponent = iconMap[iconName] || FiHelpCircle;
         return <IconComponent size={32} />;
     };
 
@@ -37,7 +49,6 @@ export const WeatherLesson = ({ onComplete }) => {
              type: 'mc',
              q: `En inglés, "${item.name}" significa...`,
              a: item.desc,
-             // FIX: Passing 'item' (object) instead of 'item.desc' (string)
              opts: [item.desc, ...getSmartDistractors(item, weather, 2, 'desc')].sort(() => 0.5 - Math.random()),
              exp: `${item.name} = ${item.desc}`
         }));
@@ -74,7 +85,8 @@ export const WeatherLesson = ({ onComplete }) => {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-6">{weather.map((it, idx) => <WeatherCard key={idx} item={it} />)}</div>
             <button onClick={() => setMode('quiz')} className="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-4 rounded-2xl shadow-lg mb-4">Tomar Prueba</button>
-            <button onClick={onComplete} className="w-full border border-gray-600 text-gray-400 font-bold py-3 rounded-2xl">Volver</button>
         </div>
     );
 };
+
+export { WeatherLesson };

@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import { AdminSeeder } from './AdminSeeder.jsx';
-import { Icons } from './Icons.jsx';
+import { FiArrowLeft, FiBriefcase, FiCpu } from 'react-icons/fi';
+import { FaBriefcaseMedical } from 'react-icons/fa';
 
 export const AdminPanel = ({ onBack }) => {
     return (
         <div className="min-h-screen bg-gray-900 text-white p-6 max-w-2xl mx-auto pb-24">
             <div className="flex items-center gap-4 mb-8 border-b border-gray-700 pb-4">
                 <button onClick={onBack} className="bg-gray-800 p-2 rounded-lg hover:bg-gray-700 transition-colors">
-                    <Icons.ArrowLeft size={20} className="text-gray-400" />
+                    <FiArrowLeft size={20} className="text-gray-400" />
                 </button>
                 <div>
                     <h1 className="text-2xl font-bold text-red-500 flex items-center gap-2">
-                        <Icons.Briefcase size={24} /> 
+                        <FiBriefcase size={24} /> 
                         Panel de Control
                     </h1>
                     <p className="text-gray-400 text-sm">Gestión de bases de datos</p>
@@ -21,7 +22,7 @@ export const AdminPanel = ({ onBack }) => {
             {/* SECTION 1: AI GENERATOR (Placeholder for Phase 3) */}
             <div className="bg-gray-800 rounded-xl p-6 mb-6 border border-indigo-500/30">
                 <h2 className="text-xl font-bold text-indigo-400 mb-4 flex items-center gap-2">
-                    <Icons.BrainCircuit size={20} />
+                    <FiCpu size={20} />
                     Generador de contenido con IA
                 </h2>
                 <div className="space-y-4">
@@ -43,7 +44,7 @@ export const AdminPanel = ({ onBack }) => {
             {/* SECTION 2: DATABASE SEEDERS */}
             <div className="bg-gray-800 rounded-xl p-6 border border-yellow-500/30">
                 <h2 className="text-xl font-bold text-yellow-500 mb-4 flex items-center gap-2">
-                    <Icons.BriefcaseMedical size={20} />
+                    <FaBriefcaseMedical size={20} />
                     Semillas de base de datos
                 </h2>
                 <p className="text-xs text-gray-400 mb-4">

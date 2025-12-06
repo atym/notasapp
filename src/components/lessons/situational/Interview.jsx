@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Icons } from '../../Icons';
+import { FiUsers, FiAward, FiMapPin } from 'react-icons/fi';
 
 const InterviewLesson = () => {
     const QUESTIONS = [
@@ -88,7 +88,7 @@ const InterviewLesson = () => {
                 {/* Sidebar */}
                 <div className="space-y-6">
                     <div className="bg-gray-800 border border-indigo-500/30 p-4 rounded-xl">
-                        <h3 className="font-bold text-indigo-400 mb-3 text-lg flex items-center gap-2"><Icons.Users size={18}/> ¿Tú o Usted?</h3>
+                        <h3 className="font-bold text-indigo-400 mb-3 text-lg flex items-center gap-2"><FiUsers size={18}/> ¿Tú o Usted?</h3>
                         <div className="space-y-3 text-sm">
                             <div className="bg-gray-900/50 p-3 rounded-lg border-l-4 border-cyan-500">
                                 <h4 className="font-bold text-cyan-400 mb-1">Tú (Informal)</h4>
@@ -107,7 +107,7 @@ const InterviewLesson = () => {
                     </div>
 
                     <div className="bg-gray-800 border border-orange-500/30 p-4 rounded-xl">
-                        <h3 className="font-bold text-orange-400 mb-3 text-lg flex items-center gap-2"><Icons.Award size={18}/> Expresando Pasión</h3>
+                        <h3 className="font-bold text-orange-400 mb-3 text-lg flex items-center gap-2"><FiAward size={18}/> Expresando Pasión</h3>
                         <div className="p-3 bg-gray-900 rounded-lg text-sm text-gray-300">
                             <p className="mb-2">En México, al responder a <span className="font-bold text-white">"¿A qué te dedicas?"</span>, es común usar <span className="font-bold text-white">"Me dedico a..."</span> para hablar de tu pasión o campo, no solo tu trabajo.</p>
                             <p>Por ejemplo:</p>
@@ -120,7 +120,7 @@ const InterviewLesson = () => {
                     </div>
 
                     <div className="bg-gray-800 border border-green-500/30 p-4 rounded-xl">
-                        <h3 className="font-bold text-green-400 mb-3 text-lg flex items-center gap-2"><Icons.MapPin size={18}/> Detalles de Vivir</h3>
+                        <h3 className="font-bold text-green-400 mb-3 text-lg flex items-center gap-2"><FiMapPin size={18}/> Detalles de Vivir</h3>
                         <div className="space-y-3">
                             <div className="p-3 bg-gray-900 rounded-lg">
                                 <p className="text-xs text-gray-400 mb-1">Cerca / Lejos</p>
