@@ -21,9 +21,13 @@ function App() {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        // If bypass is active, we don't need to listen for auth changes
-        if (devModeBypass) return;
+        // If bypass is active, set a fake user and skip listening for auth changes
+        if (devModeBypass) {
+            setUser({ email: 'dev@local.host', uid: 'dev-user' });
+            return;
+        }
 
+        // Otherwise, listen for real authentication state changes
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
         });
@@ -84,8 +88,8 @@ function App() {
         }
     };
 
-    // If not a real user and bypass is not active, show Login page
-    if (!user && !devModeBypass) {
+    // If there is no user (real or fake), show the Login page.
+    if (!user) {
         return <Login />;
     }
 
