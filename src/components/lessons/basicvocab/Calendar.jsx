@@ -1,8 +1,10 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { db } from '../../../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { getSmartDistractors } from '../../../data';
 import { LessonQuiz } from '../quizzes/LessonQuiz';
+import { Shuffle, Zap, HelpCircle, Volume2 } from 'lucide-react';
 
 const CalendarLesson = () => {
     const [mode, setMode] = useState('learn');
@@ -40,11 +42,25 @@ const CalendarLesson = () => {
         window.speechSynthesis.speak(utterance);
     };
 
+    const speakDate = (date) => {
+        // Use toLocaleDateString to get timezone-correct day and month names
+        const dayName = date.toLocaleDateString('es-ES', { weekday: 'long' });
+        const monthName = date.toLocaleDateString('es-ES', { month: 'long' });
+        const dayNumber = date.getDate();
+        
+        // Construct the final string and speak it
+        const dateString = `${dayName}, ${dayNumber} de ${monthName}`;
+        speak(dateString);
+    };
+
     const handleRandomSpeak = () => {
-        if (days.length === 0 && months.length === 0) return;
-        const combined = [...days, ...months];
-        const randomItem = combined[Math.floor(Math.random() * combined.length)];
-        speak(randomItem.es);
+        // Generate a random valid date
+        const year = new Date().getFullYear();
+        const month = Math.floor(Math.random() * 12); // 0-11
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const day = Math.floor(Math.random() * daysInMonth) + 1;
+        const randomDate = new Date(year, month, day);
+        speakDate(randomDate);
     };
 
     const handleShuffle = () => {
@@ -77,11 +93,11 @@ const CalendarLesson = () => {
         );
     };
 
+    const today = useMemo(() => new Date(), []);
     const dateStr = useMemo(() => {
-        const today = new Date();
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         return today.toLocaleDateString('es-ES', options);
-    }, []);
+    }, [today]);
 
     if(loading) return <div className="p-10 text-center text-gray-400">Cargando calendario...</div>;
 
@@ -91,21 +107,32 @@ const CalendarLesson = () => {
         <div className="px-2 py-6 sm:px-6 max-w-4xl mx-auto pb-24 space-y-6">
             <div className="bg-gray-800 border border-green-500/30 p-3 rounded-xl text-center shadow-lg">
                 <div className="text-xs text-green-400 font-bold uppercase tracking-wider mb-1">Fecha de hoy</div>
-                <div className="text-xl font-bold text-white capitalize">{dateStr}</div>
+                <div className="flex items-center justify-center gap-3">
+                    <div className="text-xl font-bold text-white capitalize">{dateStr}</div>
+                    <button onClick={() => speakDate(today)} className="text-gray-400 hover:text-white transition-colors">
+                        <Volume2 size={20} />
+                    </button>
+                </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-2">
-                <button onClick={handleShuffle} className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg text-sm border border-gray-600 flex items-center justify-center gap-2">
-                    <span>🔀</span>
-                    <span className="hidden sm:inline">Mezclar</span>
+            <div className="space-y-2">
+                <button
+                    onClick={handleRandomSpeak}
+                    className="w-full flex items-center justify-center gap-3 py-3 rounded-xl border border-purple-500/30 bg-purple-500/10 text-purple-300 hover:bg-purple-500/20 transition-all font-medium text-sm">
+                    <Zap size={16} />
+                    Fecha al Azar
                 </button>
-                <button onClick={handleRandomSpeak} className="bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 px-4 rounded-lg text-sm flex items-center justify-center gap-2">
-                    <span>🔊</span>
-                    <span className="hidden sm:inline">Hablar</span>
+                 <button
+                    onClick={() => setMode('quiz')}
+                    className="w-full flex items-center justify-center gap-3 py-3 rounded-xl border border-green-500/30 bg-green-500/10 text-green-300 hover:bg-green-500/20 transition-all font-medium text-sm">
+                    <HelpCircle size={16} />
+                    Empezar Prueba
                 </button>
-                <button onClick={() => setMode('quiz')} className="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-lg text-sm shadow-lg flex items-center justify-center gap-2">
-                    <span>▶️</span>
-                    <span className="hidden sm:inline">Prueba</span>
+                <button
+                    onClick={handleShuffle}
+                    className="w-full flex items-center justify-center gap-3 py-3 rounded-xl border border-gray-500/30 bg-gray-500/10 text-gray-300 hover:bg-gray-500/20 transition-all font-medium text-sm">
+                    <Shuffle size={16} />
+                    Mezclar Tarjetas
                 </button>
             </div>
 
