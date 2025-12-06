@@ -2,29 +2,32 @@ import { useState, useEffect } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Dashboard } from './components/views/Dashboard.jsx';
 import { AdminPanel } from './components/views/AdminPanel.jsx';
-import { Login } from './components/views/Login.jsx'; // Import the Login component
-import { auth } from './firebase'; // Import Firebase auth
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { Login } from './components/views/Login.jsx';
+import { auth } from './firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 
 import { VocabMix } from './components/views/VocabMix.jsx';
 import { FinalQuiz } from './components/lessons/quizzes/FinalQuiz.jsx';
 
-// IMPORT THE NEW MANAGERS
 import BasicVocabManager from './components/lessons/basicvocab/index.jsx';
 import SituationalManager from './components/lessons/situational/index.jsx';
 import GrammarManager from './components/lessons/grammar/index.jsx';
 
+// Check for the development mode bypass flag from environment variables
+const devModeBypass = import.meta.env.VITE_DEV_MODE_BYPASS_LOGIN === 'true';
+
 function App() {
     const [view, setView] = useState('dashboard');
-    const [user, setUser] = useState(null); // Add user state
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
-        // Listen for auth state changes
+        // If bypass is active, we don't need to listen for auth changes
+        if (devModeBypass) return;
+
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
         });
 
-        // Cleanup subscription on unmount
         return () => unsubscribe();
     }, []);
 
@@ -32,11 +35,6 @@ function App() {
         window.scrollTo(0, 0);
     }, [view]);
 
-    const handleSignOut = () => {
-        signOut(auth).catch((error) => console.error("Error signing out:", error));
-    };
-
-    // Wrapper for new lessons to ensure they have a Back button
     const LessonWrapper = ({ children }) => (
         <div className="min-h-screen bg-[#111827] p-6">
             {children}
@@ -47,11 +45,10 @@ function App() {
         switch(view) {
             case 'admin': return <AdminPanel onBack={()=>setView('dashboard')} />;
             
-            // --- BASIC VOCAB (MANAGED) ---
             case 'vocales': 
             case 'alphabet':
             case 'numbers':
-            case 'colors': // MOVED HERE
+            case 'colors':
             case 'weather':
             case 'calendar':
                 return (
@@ -60,7 +57,6 @@ function App() {
                     </LessonWrapper>
                 );
 
-            // --- SITUATIONAL (MANAGED) ---
             case 'feelings':
             case 'intro':
             case 'interview':
@@ -73,7 +69,6 @@ function App() {
                     </LessonWrapper>
                 );
             
-            // --- GRAMMAR (MANAGED) ---
             case 'pronouns':
             case 'conjugations':
             case 'verbs':
@@ -83,19 +78,17 @@ function App() {
                     </LessonWrapper>
                 );
 
-            // --- LEGACY ROUTES ---
             case 'vocabmix': return <VocabMix onComplete={()=>setView('dashboard')} />;
             case 'finalquiz': return <FinalQuiz onComplete={()=>setView('dashboard')} />;
             default: return <Dashboard onSelectLesson={setView} />;
         }
     };
 
-    // If user is not logged in, show the Login page
-    if (!user) {
+    // If not a real user and bypass is not active, show Login page
+    if (!user && !devModeBypass) {
         return <Login />;
     }
 
-    // If user is logged in, show the app
     return (
         <div className="min-h-screen bg-gray-900 text-white font-sans antialiased">
             {view !== 'admin' && (
@@ -106,7 +99,6 @@ function App() {
                         </button> 
                         : <div className="text-xl font-black text-indigo-500 tracking-tighter">NOTAS<span className="text-pink-500">.APP</span></div>
                     }
-                    <button onClick={handleSignOut} className="text-xs text-gray-400 hover:text-white transition-colors">Sign Out</button>
                 </div>
             )}
             <div className="p-6">
