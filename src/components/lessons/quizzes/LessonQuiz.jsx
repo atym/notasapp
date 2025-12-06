@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export const LessonQuiz = ({ onComplete, questionCount, pool }) => {
+export const LessonQuiz = ({ onComplete, questionCount, pool, enableSpeech }) => {
     const [questions, setQuestions] = useState([]);
     const [currentQ, setCurrentQ] = useState(0);
     const [score, setScore] = useState(0);
@@ -29,7 +29,9 @@ export const LessonQuiz = ({ onComplete, questionCount, pool }) => {
         const correct = opt === q.a;
         if (correct) {
             setScore(s => s+1);
-            speak(q.a);
+            if (enableSpeech) {
+                speak(q.a);
+            }
         } 
         
         const msg = correct 

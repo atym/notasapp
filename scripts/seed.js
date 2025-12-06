@@ -4,7 +4,7 @@ import { createRequire } from 'module';
 
 // INSTRUCTIONS:
 // 1. Update the variable below to the name of the collection you want to seed.
-const COLLECTION_TO_SEED = 'colors';
+const COLLECTION_TO_SEED = 'weather';
 
 // 2. Make sure your data is correctly formatted in 'scripts/data_template.js'.
 // 3. Run the script from your terminal: node scripts/seed.js

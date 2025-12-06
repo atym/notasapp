@@ -58,7 +58,7 @@ const ColorsLesson = () => {
 
     if (loading) return <div className="p-10 text-center text-gray-400">Cargando colores...</div>;
 
-    if(mode === 'quiz') return <div className="p-6 max-w-md mx-auto pb-24"><LessonQuiz pool={quizPool} questionCount={10} onComplete={() => setMode('learn')} /></div>;
+    if(mode === 'quiz') return <div className="p-6 max-w-md mx-auto pb-24"><LessonQuiz pool={quizPool} questionCount={10} onComplete={() => setMode('learn')} enableSpeech={true} /></div>;
 
     return (
         <div className="p-6 max-w-4xl mx-auto pb-24">
