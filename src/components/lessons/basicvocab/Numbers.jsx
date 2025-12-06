@@ -47,18 +47,18 @@ const NumbersLesson = () => {
         <h2 className="text-2xl font-black text-white tracking-tight">Los números</h2>
       </div>
 
-      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3">
+      <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-1">
         {numbers.map((item) => (
           <button
             key={item.order}
             onClick={() => speak(item.span)}
-            className="group flex flex-col items-center justify-center text-center p-3 rounded-xl border border-gray-700/50 hover:bg-white/5 hover:border-indigo-500/50 transition-all active:scale-95 aspect-square"
+            className="group flex flex-col items-center justify-center text-center p-1 rounded-lg bg-gray-800 border border-gray-700 shadow-md hover:bg-gray-700 hover:border-indigo-500 transition-all active:scale-95 aspect-square transform hover:-translate-y-1"
           >
-            <span className="text-4xl font-extrabold text-indigo-400 group-hover:text-indigo-300">
+            <span className="text-2xl font-extrabold text-indigo-400 group-hover:text-indigo-300">
               {item.label}
             </span>
-            <span className="mt-1 text-sm font-semibold text-white">{item.span}</span>
-            <Volume2 className="w-4 h-4 text-gray-600 group-hover:text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity mt-2" />
+            <span className="mt-1 text-xs font-semibold text-white">{item.span}</span>
+            <Volume2 className="w-3 h-3 text-gray-600 group-hover:text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity mt-1" />
           </button>
         ))}
       </div>
@@ -76,7 +76,7 @@ const NumbersLesson = () => {
 
             <div>
                 <h4 className="font-bold text-white">1. The "Memorize" Zone (0–15)</h4>
-                <ul className="text-xs text-gray-300 space-y-1 list-disc list-inside opacity-80 mt-1">
+                <ul className="text-sm text-gray-300 space-y-1 list-disc list-inside opacity-80 mt-1">
                     <li><b className="text-white">0–10:</b> Rote memorization (Uno, dos, tres...).</li>
                     <li><b className="text-white">11–15:</b> All end in <code className="text-pink-300 bg-black/30 px-1 rounded">-ce</code> (Once, doce, trece, catorce, quince).</li>
                 </ul>
@@ -84,7 +84,7 @@ const NumbersLesson = () => {
 
             <div>
                 <h4 className="font-bold text-white">2. The One-Word Rule (16–29)</h4>
-                 <ul className="text-xs text-gray-300 space-y-1 list-disc list-inside opacity-80 mt-1">
+                 <ul className="text-sm text-gray-300 space-y-1 list-disc list-inside opacity-80 mt-1">
                     <li><b className="text-white">16–19:</b> Starts with <code className="text-pink-300 bg-black/30 px-1 rounded">Dieci...</code> (Dieciséis).</li>
                     <li><b className="text-white">20–29:</b> Starts with <code className="text-pink-300 bg-black/30 px-1 rounded">Veinti...</code> (Veintiuno).</li>
                     <li>Note: Watch for accents on 16, 22, 23, 26.</li>
@@ -93,7 +93,7 @@ const NumbersLesson = () => {
 
             <div>
                 <h4 className="font-bold text-white">3. The Three-Word Rule (30–99)</h4>
-                <ul className="text-xs text-gray-300 space-y-1 list-disc list-inside opacity-80 mt-1">
+                <ul className="text-sm text-gray-300 space-y-1 list-disc list-inside opacity-80 mt-1">
                     <li>From 30 on, separate the words with <code className="text-pink-300 bg-black/30 px-1 rounded">y</code> (and).</li>
                     <li>Pattern: [Ten] <b className="text-white">y</b> [One] (Example: 34 = <i className="text-gray-300">Treinta y cuatro</i>).</li>
                     <li>The Tens: End in <code className="text-pink-300 bg-black/30 px-1 rounded">-enta</code> (Cuarenta, Cincuenta).</li>
@@ -102,13 +102,13 @@ const NumbersLesson = () => {
 
             <div>
                 <h4 className="font-bold text-white">4. The Hundreds (Gender & Irregulars)</h4>
-                <ul className="text-xs text-gray-300 space-y-1 list-disc list-inside opacity-80 mt-1">
+                <ul className="text-sm text-gray-300 space-y-1 list-disc list-inside opacity-80 mt-1">
                    <li>Hundreds change gender based on the noun (<b className="text-white">-os</b> for masc, <b className="text-white">-as</b> for fem).</li>
                    <li>Example: <i className="text-gray-300">Doscient<b className="text-white">as</b> casas</i>.</li>
                    <li className="pt-2 font-bold text-white">The 3 Irregulars (Memorize these!):</li>
                 </ul>
                 <div className="mt-2 overflow-x-auto">
-                    <table className="min-w-full text-xs text-left">
+                    <table className="min-w-full text-sm text-left">
                         <thead className="border-b border-gray-700">
                             <tr>
                                 <th className="p-2">Number</th>
@@ -127,7 +127,7 @@ const NumbersLesson = () => {
             
             <div>
                 <h4 className="font-bold text-white">5. Three "Gotcha" Rules</h4>
-                <ul className="text-xs text-gray-300 space-y-1 list-disc list-inside opacity-80 mt-1">
+                <ul className="text-sm text-gray-300 space-y-1 list-disc list-inside opacity-80 mt-1">
                     <li><b className="text-white">Uno becomes Un:</b> Before a masculine noun. (Tengo <i className="text-gray-300">un</i> gato).</li>
                     <li><b className="text-white">100 vs 100+:</b> Exactly 100 is <b className="text-white">Cien</b>. 101+ becomes <b className="text-white">Ciento...</b> (Ciento dos).</li>
                     <li><b className="text-white">The Billion Trap:</b> 1,000,000,000 is <b className="text-white">Mil millones</b>. (In Spanish, <i className="text-gray-300">Un Billón</i> is a Trillion).</li>
