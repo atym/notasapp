@@ -45,7 +45,6 @@ const NumbersLesson = () => {
     <div className="w-full text-gray-100 space-y-8 animate-fade-in">
       <div className="space-y-1">
         <h2 className="text-2xl font-black text-white tracking-tight">Los números</h2>
-        <p className="text-gray-400 text-xs font-medium">Del 0 al 19</p>
       </div>
 
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3">
