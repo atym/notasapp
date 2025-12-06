@@ -13,17 +13,18 @@ import BasicVocabManager from './components/lessons/basicvocab/index.jsx';
 import SituationalManager from './components/lessons/situational/index.jsx';
 import GrammarManager from './components/lessons/grammar/index.jsx';
 
-// Check for the development mode bypass flag from environment variables
-const devModeBypass = import.meta.env.VITE_DEV_MODE_BYPASS_LOGIN === 'true';
+// The bypass should only be active in DEV mode AND when the env flag is true.
+const devModeBypass = import.meta.env.DEV && import.meta.env.VITE_DEV_MODE_BYPASS_LOGIN === 'true';
+const devUserEmail = import.meta.env.VITE_DEV_USER_EMAIL || 'dev@local.host';
 
 function App() {
     const [view, setView] = useState('dashboard');
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        // If bypass is active, set a fake user and skip listening for auth changes
+        // If bypass is active, set a fake user from .env and skip listening for auth changes
         if (devModeBypass) {
-            setUser({ email: 'dev@local.host', uid: 'dev-user' });
+            setUser({ email: devUserEmail, uid: 'dev-user' });
             return;
         }
 
@@ -46,8 +47,11 @@ function App() {
     );
 
     const renderView = () => {
+        // Consolidate props to pass down to all children
+        const viewProps = { user, onSelectLesson: setView, onComplete: () => setView('dashboard') };
+
         switch(view) {
-            case 'admin': return <AdminPanel onBack={()=>setView('dashboard')} />;
+            case 'admin': return <AdminPanel {...viewProps} onBack={()=>setView('dashboard')} />;
             
             case 'vocales': 
             case 'alphabet':
@@ -57,7 +61,7 @@ function App() {
             case 'calendar':
                 return (
                     <LessonWrapper>
-                        <BasicVocabManager lessonId={view} />
+                        <BasicVocabManager lessonId={view} user={user} />
                     </LessonWrapper>
                 );
 
@@ -69,7 +73,7 @@ function App() {
             case 'nationalities':
                 return (
                     <LessonWrapper>
-                        <SituationalManager lessonId={view} />
+                        <SituationalManager lessonId={view} user={user} />
                     </LessonWrapper>
                 );
             
@@ -78,13 +82,13 @@ function App() {
             case 'verbs':
                 return (
                     <LessonWrapper>
-                        <GrammarManager lessonId={view} />
+                        <GrammarManager lessonId={view} user={user} />
                     </LessonWrapper>
                 );
 
-            case 'vocabmix': return <VocabMix onComplete={()=>setView('dashboard')} />;
-            case 'finalquiz': return <FinalQuiz onComplete={()=>setView('dashboard')} />;
-            default: return <Dashboard onSelectLesson={setView} />;
+            case 'vocabmix': return <VocabMix {...viewProps} />;
+            case 'finalquiz': return <FinalQuiz {...viewProps} />;
+            default: return <Dashboard {...viewProps} />;
         }
     };
 
