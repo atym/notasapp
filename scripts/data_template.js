@@ -7,17 +7,16 @@
 
 // The array must be named DATA and exported.
 export const DATA = [
-  { 
-    es: "Hola", 
-    en: "Hello", 
-    // Add any other fields you need for your collection.
-    // For example:
-    // category: "greeting",
-    // difficulty: 1 
-  },
-  { 
-    es: "Mundo", 
-    en: "World", 
-  },
-  // ... add as many objects as you need.
+  { es: "Rojo", en: "Red", hex: "bg-red-500" },
+  { es: "Azul", en: "Blue", hex: "bg-blue-500" },
+  { es: "Verde", en: "Green", hex: "bg-green-500" },
+  { es: "Amarillo", en: "Yellow", hex: "bg-yellow-500" },
+  { es: "Negro", en: "Black", hex: "bg-gray-900" },
+  { es: "Blanco", en: "White", hex: "bg-white" },
+  { es: "Naranja", en: "Orange", hex: "bg-orange-500" },
+  { es: "Morado", en: "Purple", hex: "bg-purple-500" },
+  { es: "Rosa", en: "Pink", hex: "bg-pink-500" },
+  { es: "Gris", en: "Gray", hex: "bg-gray-500" },
+  { es: "Marrón", en: "Brown", hex: "bg-yellow-800" },
+  { es: "Turquesa", en: "Turquoise", hex: "bg-teal-500" }
 ];

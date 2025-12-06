@@ -3,6 +3,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../firebase';
 import { LessonQuiz } from '../quizzes/LessonQuiz';
 import { getSmartDistractors } from '../../../data';
+import { HelpCircle } from 'lucide-react';
 
 const ColorsLesson = () => {
     const [mode, setMode] = useState('learn');
@@ -30,10 +31,11 @@ const ColorsLesson = () => {
         if (colors.length === 0) return [];
         return colors.map(c => ({
             type: 'mc',
-            q: `¿Qué color es ${c.emoji}?`,
+            q: `¿Qué color es este?`,
+            color: c.hex,
             a: c.es,
             opts: [c.es, ...getSmartDistractors(c, colors, 2, 'es')].sort(()=>0.5-Math.random()),
-            exp: `${c.emoji} es ${c.es} (${c.en})`
+            exp: `El color es ${c.es} (${c.en})`
         }));
     }, [colors]);
 
@@ -66,7 +68,12 @@ const ColorsLesson = () => {
                     <ColorCard key={i} c={c} />
                 ))}
             </div>
-            <button onClick={() => setMode('quiz')} className="w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 rounded-2xl shadow-lg mb-4">Prueba de Colores</button>
+            <button
+                onClick={() => setMode('quiz')}
+                className="w-full flex items-center justify-center gap-3 py-3 rounded-xl border border-purple-500/30 bg-purple-500/10 text-purple-300 hover:bg-purple-500/20 transition-all font-medium text-sm">
+                <HelpCircle size={16} />
+                Empezar Prueba
+            </button>
         </div>
     );
 };
